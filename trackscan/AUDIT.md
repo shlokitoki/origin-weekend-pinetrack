@@ -1,10 +1,10 @@
-# TrackScan direction and recording audit
+# Pinetrack direction and recording audit
 
 Audit date: 27 September 2026. Original workbook exports and the original `TrackScan Results` folder remain unchanged. The website's derived data has been replaced; the original headline counts and rankings are superseded.
 
 ## What the results mean
 
-**TrackScan finds places worth inspecting. It does not diagnose broken rails.** Phone vibration can reflect vehicles, suspension, speed, crossings, track geometry, positioning error, or other causes. These are screening leads, not confirmed defects or rail-level locations.
+**Pinetrack finds places worth inspecting. It does not diagnose broken rails.** Phone vibration can reflect vehicles, suspension, speed, crossings, track geometry, positioning error, or other causes. These are screening leads, not confirmed defects or rail-level locations.
 
 ## Confirmed corrections
 

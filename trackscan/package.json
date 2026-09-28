@@ -1,7 +1,7 @@
 {
-  "name": "trackscan-demo",
+  "name": "pinetrack-demo",
   "private": true,
-  "description": "TrackScan demo site with automatic inspection alerts, optionally emailed to a demo inbox",
+  "description": "Pinetrack demo site with automatic inspection alerts, optionally emailed to a demo inbox",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"

@@ -1,4 +1,4 @@
-# TrackScan: places worth inspecting
+# Pinetrack: places worth inspecting
 
 This is an inspection-screening map. It does not diagnose broken rails or confirm defects. Westbound and eastbound evidence is now analyzed separately.
 
@@ -26,7 +26,7 @@ Open http://localhost:3000. Without SMTP settings the server runs with email off
 | `SMTP_HOST` | SMTP server, for example `smtp.gmail.com` |
 | `SMTP_PORT` | Optional, default `587`; use `465` for implicit TLS |
 | `SMTP_USER`, `SMTP_PASS` | SMTP login; for Gmail, an app password |
-| `SMTP_FROM` | Optional sender, for example `TrackScan <you@example.com>` |
+| `SMTP_FROM` | Optional sender, for example `Pinetrack <you@example.com>` |
 | `DEMO_ALERT_EMAIL` | The team inbox. You can instead edit the `DEMO_ALERT_EMAIL` constant at the top of `server.js` |
 
 ## Run on Replit
@@ -37,7 +37,7 @@ Open http://localhost:3000. Without SMTP settings the server runs with email off
 
 ## Automatic alerts
 
-During Ride the line, each spot the train reaches is checked against the rule in `alert-rules.js`, which reads its thresholds from `data/summary.json`. A spot at the Inspect level fires one alert per page load: a toast over the map, a row in the Alerts tab, and a pulse on step 6 of the How TrackScan works strip. The recipient is always E Line Track Maintenance, configured by the agency; in the demo it is the team inbox.
+During Ride the line, each spot the train reaches is checked against the rule in `alert-rules.js`, which reads its thresholds from `data/summary.json`. A spot at the Inspect level fires one alert per page load: a toast over the map, a row in the Alerts tab, and a pulse on step 6 of the How Pinetrack works strip. The recipient is always E Line Track Maintenance, configured by the agency; in the demo it is the team inbox.
 
 With the email server, the page posts only the spot ID to `/api/alert`. The server rebuilds the alert from its own copy of the data files and emails `DEMO_ALERT_EMAIL`; the browser never chooses the recipient or the content. The server sends at most one email per spot every 30 seconds and 60 per hour (`ALERT_MAX_PER_HOUR`). When email is off or fails, the alert stays on screen and the viewer sees no error. The inspector buttons (issue found / nothing found) update the status on the page only.
 

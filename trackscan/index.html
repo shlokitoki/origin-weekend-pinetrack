@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TrackScan — Find places worth inspecting. Follow the evidence.</title>
+<title>Pinetrack — Find places worth inspecting. Follow the evidence.</title>
 <meta name="description" content="Explore measured track vibration on LA Metro's E Line. A 3D map of direction-specific places worth inspecting. Phone vibration is not a diagnosis of broken rails.">
 <!-- server.js switches this on when it can email alerts; static hosting leaves it off. -->
-<meta name="trackscan-email" content="off">
+<meta name="pinetrack-email" content="off">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fcfcfb'/%3E%3Cpath d='M7 23V9m8 14V5m8 18V12' stroke='%23d03b3b' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
@@ -48,7 +48,7 @@ header{background:white;padding-top:23px}
 /* Evidence is the phone recordings only. */
 .evidence-note{font-size:12px;line-height:1.55;color:#6f6c64;margin:-4px 0 12px}
 
-/* How TrackScan works: six steps from sensor to alert, and the alert levels. */
+/* How Pinetrack works: six steps from sensor to alert, and the alert levels. */
 .how{display:grid;grid-template-columns:minmax(0,1fr) 290px;grid-template-areas:"head levels" "steps levels" "detail levels";column-gap:26px;padding:14px 36px 16px;border-bottom:1px solid var(--line)}
 .how-head{grid-area:head;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px}.how-steps{grid-area:steps}.how-detail{grid-area:detail}.levels{grid-area:levels}
 .how-head h2{font:12px/1.5 var(--mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:400}
@@ -121,7 +121,7 @@ header{background:white;padding-top:23px}
 </head>
 <body>
 <header>
- <div class="brand-row"><div class="wordmark">trackscan<span class="brand-dot"></span></div><span class="kicker">Track health · Metro E Line</span></div>
+ <div class="brand-row"><div class="wordmark">pinetrack<span class="brand-dot"></span></div><span class="kicker">Track health · Metro E Line</span></div>
  <div class="headline"><h1>Find places worth inspecting. Follow the evidence.</h1><p class="subline" id="subtitle">Loading measured results…</p></div>
  <div class="funnel" aria-label="Inspection progress">
   <div class="step"><span class="step-number">01</span><div><div class="step-label">Sampled corridor</div><strong id="km">—</strong></div></div>
@@ -131,7 +131,7 @@ header{background:white;padding-top:23px}
 </header>
 <main>
  <section class="how" id="how" aria-labelledby="how-title">
-   <div class="how-head"><h2 id="how-title">How TrackScan works</h2><p>From a shake on the train to an alert for the track team, with no one watching a screen.</p></div>
+   <div class="how-head"><h2 id="how-title">How Pinetrack works</h2><p>From a shake on the train to an alert for the track team, with no one watching a screen.</p></div>
    <ol class="how-steps">
     <li class="how-step" data-step="1"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2.5-6 4 12 3-9 2 3H21"/></svg></span><span class="how-text"><span class="how-num">01</span>Sensor on the train floor</span><span class="how-more">Records vibration 100 times a second plus GPS on every trip. Today, phones stand in for our sensor.</span></li>
     <li class="how-step" data-step="2"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-3m4 3v-6m4 6V11"/><path d="M18 14V4m-3.5 3.5L18 4l3.5 3.5"/></svg></span><span class="how-text"><span class="how-num">02</span>Uploads after each run</span><span class="how-more">Uploads over cellular after each run, automatically. Today, the phone exports were uploaded by hand.</span></li>
@@ -178,7 +178,7 @@ header{background:white;padding-top:23px}
     <div class="tab-content" id="alerts" role="tabpanel" aria-labelledby="tab-alerts" hidden>
      <div id="alerts-list-view">
       <p class="alerts-intro">Sent automatically when a spot meets the Inspect rule. Recipient: <strong id="alerts-recipient"></strong> (configured by the agency).</p>
-      <div class="empty-card" id="alerts-empty">No alerts yet. Press <strong>Ride the line</strong>: TrackScan checks each spot as the train passes and sends alerts on its own.</div>
+      <div class="empty-card" id="alerts-empty">No alerts yet. Press <strong>Ride the line</strong>: Pinetrack checks each spot as the train passes and sends alerts on its own.</div>
       <ol class="alert-list" id="alert-list"></ol>
      </div>
      <div id="alert-detail" hidden>
@@ -206,7 +206,7 @@ header{background:white;padding-top:23px}
    <div class="control-right"><button id="buildings" class="buildings" aria-pressed="true"><span class="toggle-dot"></span><span>Buildings on</span></button><button id="stop-ride" hidden>Stop ■</button><button id="ride" class="primary" disabled>Ride the line ▶</button></div>
   </div>
  </section>
- <section id="analysis"><h2>How we measured it</h2><p><strong>TrackScan finds places worth inspecting. It does not diagnose broken rails.</strong> Phone vibration can reflect the vehicle, speed, track geometry, crossings, or other conditions. An inspector must establish the cause.</p>
+ <section id="analysis"><h2>How we measured it</h2><p><strong>Pinetrack finds places worth inspecting. It does not diagnose broken rails.</strong> Phone vibration can reflect the vehicle, speed, track geometry, crossings, or other conditions. An inspector must establish the cause.</p>
 <p>Westbound and eastbound recordings are analyzed separately. Multiple phones on the same inferred pass contribute one combined result. A colored ribbon is an approximate corridor location, not a surveyed rail position or confirmed track assignment.</p>
 <details class="method-details"><summary>Review the recordings and calculation method</summary><p id="audit-method"></p><p id="grouping-note"></p><div class="audit-table-wrap"><table id="recording-table"><thead><tr><th>Recording</th><th>Direction</th><th>Pass group</th><th>Start time</th></tr></thead><tbody></tbody></table></div><p>Sources: <a href="https://docs.cpuc.ca.gov/PUBLISHED/FINAL_DECISION/106853.htm" target="_blank" rel="noopener">CPUC: double-track Expo corridor</a> · <a href="https://gtfs.org/resources/gtfs-schedule-feature-guides/shapes/" target="_blank" rel="noopener">GTFS route geometry guidance</a> · <a href="https://www.gps.gov/gps-accuracy-0" target="_blank" rel="noopener">GPS.gov: phone positioning limits</a></p><p>Vibration charts will be added separately.</p></details></section>
 </main>
@@ -223,7 +223,7 @@ let direction='westbound',allHotspots=[],recordingAudit=[];
 let map, ready=false, selected, hotspots=[], datasets={}, markers=new Map(), tab='overview', aerial=true, buildings=true, surveyDate='', alertRule;
 // Alerts go to E Line Track Maintenance (configured by the agency). The demo inbox address is set once, as
 // DEMO_ALERT_EMAIL in server.js; the page never sees it. server.js turns this flag on when it can send email.
-const EMAIL_ON=document.querySelector('meta[name="trackscan-email"]')?.content==='on';
+const EMAIL_ON=document.querySelector('meta[name="pinetrack-email"]')?.content==='on';
 const alertLog=new Map(); // One alert, and so at most one email, per spot per page load.
 let openAlertId=null;
 let orbitGesture=null;
@@ -289,10 +289,10 @@ const statusLabel={sent:'Sent',found:'Issue found',clear:'Nothing found'};
 const deliveryLabel={sending:'sending the email…',email:'emailed to the demo inbox',screen:'shown on screen (demo)'};
 const bellIcon='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>';
 function checkSpot(f){
- const p=f.properties,level=TrackScanAlerts.level(p,alertRule),earlier=alertLog.get(p.id);
+ const p=f.properties,level=PinetrackAlerts.level(p,alertRule),earlier=alertLog.get(p.id);
  if(level!=='inspect'){toast(`${p.id} · ${score(p.severity)} relative shake · ${level==='watch'?'Watch: logged, no alert':'below the alert rule'}`);return;}
  if(earlier){toast(`${p.id} · ${score(p.severity)} · alert already sent at ${clock(earlier.sentAt)}`);return;}
- const alert={id:p.id,direction:p.direction,info:TrackScanAlerts.describe(f,datasets['summary.json'],recordingAudit),sentAt:new Date(),status:'sent',delivery:EMAIL_ON?'sending':'screen'};
+ const alert={id:p.id,direction:p.direction,info:PinetrackAlerts.describe(f,datasets['summary.json'],recordingAudit),sentAt:new Date(),status:'sent',delivery:EMAIL_ON?'sending':'screen'};
  alertLog.set(p.id,alert);
  toastAlert(alert.info);pulseAlertStep();renderAlertList(p.id);showAlertState();
  if(EMAIL_ON)emailAlert(alert);
@@ -303,11 +303,11 @@ async function emailAlert(alert){
  catch{alert.delivery='screen';}
  if(openAlertId===alert.id)renderAlertDetail();
 }
-function toastAlert(d){clearTimeout(toastTimer);const t=$('toast');t.className='toast';void t.offsetWidth;t.className='toast toast-alert';t.innerHTML=`${bellIcon}<span><strong>Alert sent automatically</strong> · ${escapeHTML(d.id)} · ${escapeHTML(d.severity)} · ${escapeHTML(d.title)} · to ${escapeHTML(TrackScanAlerts.RECIPIENT)}</span>`;t.hidden=false;toastTimer=setTimeout(()=>t.hidden=true,2800);}
+function toastAlert(d){clearTimeout(toastTimer);const t=$('toast');t.className='toast';void t.offsetWidth;t.className='toast toast-alert';t.innerHTML=`${bellIcon}<span><strong>Alert sent automatically</strong> · ${escapeHTML(d.id)} · ${escapeHTML(d.severity)} · ${escapeHTML(d.title)} · to ${escapeHTML(PinetrackAlerts.RECIPIENT)}</span>`;t.hidden=false;toastTimer=setTimeout(()=>t.hidden=true,2800);}
 function renderAlertList(newId){
  const items=[...alertLog.values()].sort((a,b)=>b.sentAt-a.sentAt);
  $('alerts-empty').hidden=items.length>0;$('alerts-count').hidden=!items.length;$('alerts-count').textContent=items.length;
- $('alert-list').replaceChildren(...items.map(a=>{const li=document.createElement('li'),row=document.createElement('button');row.type='button';row.className='alert-row'+(a.id===newId?' new':'');row.innerHTML=`<span class="alert-row-top"><span class="alert-when">${escapeHTML(clock(a.sentAt))}</span><strong>${escapeHTML(a.id)}</strong><span>${escapeHTML(a.info.severity)}</span><span class="pill ${a.status}">${statusLabel[a.status]}</span></span><span class="alert-row-place">${escapeHTML(a.info.title)}</span><span class="alert-row-meta">Delivered to: ${escapeHTML(TrackScanAlerts.RECIPIENT)} (demo inbox)</span>`;row.onclick=()=>openAlert(a.id);li.append(row);return li;}));
+ $('alert-list').replaceChildren(...items.map(a=>{const li=document.createElement('li'),row=document.createElement('button');row.type='button';row.className='alert-row'+(a.id===newId?' new':'');row.innerHTML=`<span class="alert-row-top"><span class="alert-when">${escapeHTML(clock(a.sentAt))}</span><strong>${escapeHTML(a.id)}</strong><span>${escapeHTML(a.info.severity)}</span><span class="pill ${a.status}">${statusLabel[a.status]}</span></span><span class="alert-row-place">${escapeHTML(a.info.title)}</span><span class="alert-row-meta">Delivered to: ${escapeHTML(PinetrackAlerts.RECIPIENT)} (demo inbox)</span>`;row.onclick=()=>openAlert(a.id);li.append(row);return li;}));
 }
 function openAlert(id){
  const a=alertLog.get(id);if(!a)return;
@@ -322,7 +322,7 @@ function renderAlertDetail(){
  $('alert-id').textContent=d.id;$('alert-title').textContent='Possible track issue near '+d.place;
  $('alert-what').textContent=d.what+(d.provisional?' Pass grouping in this direction is provisional.':'');
  $('alert-where').textContent=d.where;$('alert-route').textContent=d.route;$('alert-latlon').textContent=d.latlon;$('alert-map').href=d.mapUrl;$('alert-recorded').textContent=d.recorded;
- $('alert-sent').textContent=`${clock(a.sentAt)}, automatically, to ${TrackScanAlerts.RECIPIENT} (demo inbox): ${deliveryLabel[a.delivery]}`;
+ $('alert-sent').textContent=`${clock(a.sentAt)}, automatically, to ${PinetrackAlerts.RECIPIENT} (demo inbox): ${deliveryLabel[a.delivery]}`;
  $('alert-status').textContent=a.status==='sent'?'Awaiting inspection':'Inspected: '+(a.status==='found'?'issue found':'nothing found');
  $('alert-evidence').replaceChildren(...d.passes.map(x=>{const li=document.createElement('li');li.innerHTML=`<strong>${escapeHTML(x.id)}${x.start?' · '+escapeHTML(x.start):''}</strong> <span>${escapeHTML(x.result)}</span><small>${x.files.map(escapeHTML).join('<br>')}</small>`;return li;}));
  $('alert-checks').replaceChildren(...d.checks.map(text=>Object.assign(document.createElement('li'),{textContent:text})));
@@ -357,9 +357,9 @@ async function init(){
   const names=['summary.json','eline_route.geojson','track_ribbon.geojson','track_roughness.geojson','hotspots.geojson','stations.geojson','recordings.json'];
   const values=await Promise.all(names.map(getData));names.forEach((name,i)=>datasets[name]=values[i]);
   recordingAudit=datasets['recordings.json'];allHotspots=datasets['hotspots.geojson'].features.filter(f=>f.geometry.type==='Point');
-  const s=datasets['summary.json'];surveyDate=TrackScanAlerts.surveyDate(s);alertRule=TrackScanAlerts.rule(s);
+  const s=datasets['summary.json'];surveyDate=PinetrackAlerts.surveyDate(s);alertRule=PinetrackAlerts.rule(s);
   $('how-rule').textContent=`Flags a ${alertRule.binM} m slice when it is at least ${alertRule.minScore}× typical and elevated (top 10% for that pass) on at least ${alertRule.minElevated} passes, at least ${alertRule.fraction.join('/')} of the passes covering it. This is the exact rule behind the spots on the map.`;
-  setHowStep(howIndex);$('alerts-recipient').textContent=TrackScanAlerts.RECIPIENT;
+  setHowStep(howIndex);$('alerts-recipient').textContent=PinetrackAlerts.RECIPIENT;
   $('subtitle').textContent=`Expo Park/USC ↔ Culver City · ${s.physical_phones} phones · ${s.recordings} recordings · ${surveyDate}`;
   $('km').textContent=s.km_scanned+' km';
   $('audit-method').textContent=`Recorded with ${s.physical_phones} physical phones (confirmed by the team), producing ${s.recordings} exports. Median vibration is calculated within each recording and ${s.method.bin_m} m slice, then across phones within a pass, then across covered passes in the selected direction. Elevated means in the top decile of that pass’s covered slice scores. Candidate rule: ${s.method.candidate_rule} The counts shown for an area refer to its peak slice. Each pass has equal weight; phones are not independent rides.`;

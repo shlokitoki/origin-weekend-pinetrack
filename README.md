@@ -1,10 +1,10 @@
-# Origin Weekend: PineTrack
+# Origin Weekend: Pinetrack
 
 Primary research from Origin Weekend (26–27 September 2026).
 
-## TrackScan
+## Pinetrack
 
-Four phones rode the LA Metro E Line between Expo Park/USC and Culver City and recorded vibration and GPS with phyphox. The analysis flags places on the corridor that are worth inspecting. It does **not** diagnose rail defects. See [`trackscan/AUDIT.md`](trackscan/AUDIT.md) for the method, corrections and limitations.
+Four phones rode the LA Metro E Line between Expo Park/USC and Culver City and recorded vibration and GPS with phyphox. The analysis flags places on the corridor that are worth inspecting. It does **not** diagnose rail defects. See [`trackscan/AUDIT.md`](trackscan/AUDIT.md) for the method, corrections and limitations. Folders and scripts still use the project's working name, TrackScan.
 
 | Path | Contents |
 |---|---|

@@ -1,4 +1,4 @@
-// TrackScan demo server: serves the static site and, when SMTP is configured, emails each automatic
+// Pinetrack demo server: serves the static site and, when SMTP is configured, emails each automatic
 // alert to the demo inbox. Without SMTP settings the site still works and alerts stay on screen.
 'use strict';
 const fs = require('fs');
@@ -31,16 +31,16 @@ const missing = [
 const mailer = missing.length ? null : nodemailer.createTransport({ host: SMTP_HOST, port: SMTP_PORT, secure: SMTP_PORT === 465, auth: { user: SMTP_USER, pass: SMTP_PASS } });
 
 // The page reads this meta tag to decide whether to call /api/alert, so a static host never gets a failing request.
-const EMAIL_FLAG = '<meta name="trackscan-email" content="off">';
+const EMAIL_FLAG = '<meta name="pinetrack-email" content="off">';
 const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
-if (!indexHtml.includes(EMAIL_FLAG)) console.warn('index.html has no trackscan-email meta tag; the page will not request alert emails.');
-const page = indexHtml.replace(EMAIL_FLAG, `<meta name="trackscan-email" content="${mailer ? 'on' : 'off'}">`);
+if (!indexHtml.includes(EMAIL_FLAG)) console.warn('index.html has no pinetrack-email meta tag; the page will not request alert emails.');
+const page = indexHtml.replace(EMAIL_FLAG, `<meta name="pinetrack-email" content="${mailer ? 'on' : 'off'}">`);
 
 function emailText(a) {
   return [
-    `Sent automatically by TrackScan to ${RECIPIENT} (demo inbox).`,
+    `Sent automatically by Pinetrack to ${RECIPIENT} (demo inbox).`,
     '',
-    'Alert level: Inspect (meets the TrackScan rule)',
+    'Alert level: Inspect (meets the Pinetrack rule)',
     `What: ${a.what}`,
     `Where: ${a.where}`,
     `Direction: ${a.route}`,
@@ -80,7 +80,7 @@ app.post('/api/alert', express.json({ limit: '1kb' }), async (req, res) => {
   const alert = describe(spot, summary, recordings);
   try {
     // Some providers use a non-address SMTP username (SendGrid's is "apikey"); SMTP_FROM covers those.
-    const from = process.env.SMTP_FROM || { name: 'TrackScan alerts', address: SMTP_USER.includes('@') ? SMTP_USER : DEMO_ALERT_EMAIL };
+    const from = process.env.SMTP_FROM || { name: 'Pinetrack alerts', address: SMTP_USER.includes('@') ? SMTP_USER : DEMO_ALERT_EMAIL };
     await mailer.sendMail({ from, to: DEMO_ALERT_EMAIL, subject: alert.subject, text: emailText(alert) });
     res.json({ sent: true });
   } catch (err) {
@@ -93,6 +93,6 @@ app.post('/api/alert', express.json({ limit: '1kb' }), async (req, res) => {
 app.use((err, req, res, next) => res.status(err.status || 500).json({ sent: false, reason: err.status < 500 ? 'bad request' : 'server error' }));
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`TrackScan demo running on port ${PORT}`);
+  console.log(`Pinetrack demo running on port ${PORT}`);
   console.log(mailer ? `Alert emails go to ${DEMO_ALERT_EMAIL}` : `Alert emails are off (missing ${missing.join(', ')}); alerts stay on screen.`);
 });

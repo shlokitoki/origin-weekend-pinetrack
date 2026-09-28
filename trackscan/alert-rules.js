@@ -1,8 +1,8 @@
-/* TrackScan alert rules. Loaded by index.html in the browser and by server.js in Node, so the
+/* Pinetrack alert rules. Loaded by index.html in the browser and by server.js in Node, so the
    on-screen alerts and the emails apply the same rule to the same data and use the same wording. */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory();
-  else root.TrackScanAlerts = factory();
+  else root.PinetrackAlerts = factory();
 })(typeof self !== 'undefined' ? self : this, function () {
   'use strict';
 
@@ -53,7 +53,7 @@
       severity: times(p.severity),
       place,
       title: 'Near ' + place,
-      subject: `TrackScan alert · ${p.id} · ${times(p.severity)} · Near ${place}`,
+      subject: `Pinetrack alert · ${p.id} · ${times(p.severity)} · Near ${place}`,
       what: `Vibration ${times(p.severity)} typical at a ${p.peak_end_m - p.peak_start_m} m slice, elevated on ${p.rides_rough} of ${p.rides_covering} ${p.direction} passes.`,
       where: `Near ${place}, ${p.dist_to_station_m} m from ${p.nearest_station} station`,
       route: `${p.direction === 'westbound' ? 'Westbound' : 'Eastbound'} (${route.from} → ${route.to})`,
