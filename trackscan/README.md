@@ -32,12 +32,10 @@ Both directions use the supplied GTFS corridor reference geometry. No fabricated
 
 ## Page controls
 
-Travel direction changes the ribbon, candidate list, evidence, and tour direction together. Location and map cards select a candidate. The Evidence tab lists covering pass groups and source recordings. Checks are separate for each candidate and stored only in memory.
+Travel direction changes the ribbon, candidate list, evidence, and tour direction together. Location and map cards select a candidate. The Evidence tab lists covering pass groups and their source recordings; the phone recordings are the only evidence. The Alert tab turns the selected candidate into an inspection alert addressed to LA Metro (which runs and maintains the track), copying the CPUC (state rail safety oversight). Visitors can open it as a pre-filled email or copy the text.
 
 Orbit rotates/tilts, Move pans, Plan is north-up. The 45-second tour follows the selected direction and slows around its candidates. Pause, resume, and stop are supported. Changing direction stops playback.
 
-## Photos and later charts
-
-`data/photos.json` is an empty optional array. Put photo files in `photos/` beside `index.html`. Each entry accepts `file`, `caption`, optional `lat`/`lon`, and optional `hotspot_id` using the new WB-/EB- IDs. Missing coordinates are read from JPEG EXIF if possible. Photos associate by matching ID or proximity within 75 m, and open in a lightbox.
+## Later charts
 
 `#trace-slot` remains available for later vibration charts. `#analysis` now explains the corrected method and includes an expandable recording-to-direction audit.
