@@ -76,3 +76,5 @@ Below How we measured it, the page shows a second, stricter analysis from `../Pi
 Each spot's Evidence tab draws a vibration trace from `data/zone_analysis.json`. It shows every train in the spot's direction, and their average, ±700 m around the spot, as in the report's zone-trace figure. Rebuild that file with `python "../Pinetrack Zone Analysis/export_site_data.py"` after re-running the analysis.
 
 `#analysis` explains the map's corrected method and includes an expandable recording-to-direction audit.
+
+The site describes the Pinetrack sensor throughout. The demo recordings came from phones standing in for the sensor, and the note at the top of How we measured it is the one place that says so. The site's copies in `figures/` are therefore cropped: each figure's title and source line appear as page text, and "from phone tilt" reads "from tilt". The originals are unchanged in `../Pinetrack Zone Analysis/figures`.

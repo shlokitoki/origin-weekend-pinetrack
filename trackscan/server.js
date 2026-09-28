@@ -54,7 +54,7 @@ function emailText(a) {
     'Suggested checks:',
     ...a.checks.map(c => `- ${c}`),
     '',
-    'A place worth inspecting, not a diagnosis of a broken rail. Phone GPS cannot identify which track or rail was affected. An inspector confirms or dismisses the alert.'
+    'A place worth inspecting, not a diagnosis of a broken rail. Sensor GPS cannot identify which track or rail was affected. An inspector confirms or dismisses the alert.'
   ].join('\n');
 }
 

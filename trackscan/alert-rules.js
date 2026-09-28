@@ -59,7 +59,7 @@
       route: `${p.direction === 'westbound' ? 'Westbound' : 'Eastbound'} (${route.from} → ${route.to})`,
       latlon: `${lat.toFixed(5)}, ${lon.toFixed(5)}`,
       mapUrl: p.google_maps,
-      recorded: `${surveyDate(summary)} · ${p.pass_evidence.filter(e => e.covered).reduce((n, e) => n + e.recordings.length, 0)} phone recordings`,
+      recorded: `${surveyDate(summary)} · ${p.pass_evidence.filter(e => e.covered).reduce((n, e) => n + e.recordings.length, 0)} sensor recordings`,
       passes,
       // Eastbound pass grouping depends on an unconfirmed recording (summary.pending_confirmation).
       provisional: p.direction === 'eastbound',
