@@ -1,0 +1,3 @@
+model,auc_any,auc_severe,ap_any,recall_any_5fa,recall_severe_5fa
+all 5 dedicated-sensor channels,0.971,0.985,0.816,0.853,0.941
+"phone-compatible, speed-normalised",0.949,0.98,0.735,0.797,0.971

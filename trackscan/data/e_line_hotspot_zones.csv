@@ -1,0 +1,8 @@
+zone,repair_order,status,where,dirs,both_tracks,chainage_from_m,chainage_to_m,trains_agree,n_trains,fdr_q,linewide_p,defect_model_prob,speed_mph,near_ramp,modeled_riders_per_weekday_per_dir,priority,lat,lon,street_view
+1,1,Confirmed (FDR<=10%),300 m east of Expo/Crenshaw,EB+WB,True,4090.0,4310.0,4,4,0.049,0.072,0.37,47.0,False,13402,0.532,34.021941,-118.331908,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.021941,-118.331908"
+2,2,Confirmed (FDR<=10%),365 m east of La Cienega/Jefferson,EB+WB,True,7470.0,7690.0,3,4,0.049,0.048,0.359,33.0,True,12190,0.525,34.026095,-118.368173,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.026095,-118.368173"
+3,4,Confirmed (FDR<=10%),230 m west of Expo Park/USC,EB,False,230.0,250.0,3,4,0.077,0.269,0.147,27.0,False,13331,0.308,34.018258,-118.288223,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.018258,-118.288223"
+4,3,Probable,414 m west of Expo/Vermont,EB+WB,True,750.0,970.0,2,4,0.251,0.9,0.861,35.0,False,13500,0.462,34.018292,-118.296026,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.018292,-118.296026"
+5,6,Probable,229 m east of Expo/Western,EB,False,1910.0,1930.0,2,4,0.122,0.754,0.25,25.0,False,13500,0.266,34.018321,-118.30643,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.018321,-118.306430"
+6,7,Probable,31 m west of Farmdale,EB,False,5670.0,5670.0,2,3,0.174,0.975,0.317,12.0,False,12604,0.222,34.024026,-118.346423,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.024026,-118.346423"
+7,5,Probable,695 m west of La Cienega/Jefferson,EB,False,8750.0,8750.0,2,4,0.122,0.758,0.145,31.0,True,11690,0.298,34.027101,-118.379597,"https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=34.027101,-118.379597"

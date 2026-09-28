@@ -69,6 +69,10 @@ Travel direction changes the ribbon, candidate list, evidence, and tour directio
 
 Orbit rotates/tilts, Move pans, Plan is north-up. The 45-second tour follows the selected direction and slows around its candidates. Pause, resume, and stop are supported. Changing direction stops playback.
 
-## Later charts
+## Second analysis and vibration traces
 
-`#trace-slot` remains available for later vibration charts. `#analysis` now explains the corrected method and includes an expandable recording-to-direction audit.
+Below How we measured it, the page shows a second, stricter analysis from `../Pinetrack Zone Analysis`: 13 recordings (the 11 above plus two from a 12:09 eastbound train), 6 trains and 20 m segments, with zones kept only where independent trains agree under a permutation test and a false-discovery-rate cut. It lists 7 zones, 3 confirmed and 4 probable, from `data/e_line_hotspot_zones.csv`, followed by three of its figures in `figures/`. A zone's "On our map" column lists the map's spots within 50 m of it. Selecting one opens that spot on the map.
+
+Each spot's Evidence tab draws a vibration trace from `data/zone_analysis.json`. It shows every train in the spot's direction, and their average, ±700 m around the spot, as in the report's zone-trace figure. Rebuild that file with `python "../Pinetrack Zone Analysis/export_site_data.py"` after re-running the analysis.
+
+`#analysis` explains the map's corrected method and includes an expandable recording-to-direction audit.

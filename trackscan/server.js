@@ -66,6 +66,7 @@ app.disable('x-powered-by');
 app.get(['/', '/index.html'], (req, res) => res.type('html').send(page));
 app.get('/alert-rules.js', (req, res) => res.sendFile(path.join(__dirname, 'alert-rules.js')));
 app.use('/data', express.static(path.join(__dirname, 'data')));
+app.use('/figures', express.static(path.join(__dirname, 'figures')));
 
 // Only the spot ID comes from the browser. The recipient and every number come from this server's data files.
 app.post('/api/alert', express.json({ limit: '1kb' }), async (req, res) => {

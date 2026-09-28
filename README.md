@@ -11,7 +11,8 @@ Four phones rode the LA Metro E Line between Expo Park/USC and Culver City and r
 | `*.xlsx` | 11 raw phyphox exports (Accelerometer, Location and Metadata sheets) from 26 Sep 2026 |
 | `TrackScan Results/` | Original analysis: `code/` (Python + R pipeline, E Line GTFS geometry), charts, hotspot CSVs, `web_data/`. The audit supersedes its headline results. |
 | `TrackScan Audit/` | 27 Sep re-analysis that separates westbound and eastbound evidence, with scripts and intermediate CSVs |
-| `trackscan/` | Map website (MapLibre) built from the audited data, with automatic inspection alerts and an optional Node server that emails them |
+| `Pinetrack Zone Analysis/` | Second, stricter analysis of 13 recordings on 6 trains: pipeline code, outputs and 16 figures. Confirms 3 rough-track zones and lists 4 probable ones |
+| `trackscan/` | Map website (MapLibre) built from the audited data, with automatic inspection alerts, the second analysis's zones and figures, and an optional Node server that emails alerts |
 
 ### View the site
 

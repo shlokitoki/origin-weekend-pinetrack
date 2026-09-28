@@ -117,6 +117,30 @@ header{background:white;padding-top:23px}
 @media(max-width:899px){.alert-body>p,.alert-facts,.alert-checks,.alert-evidence{font-size:14px}.alert-actions button{font-size:14px}.how-steps{grid-template-columns:repeat(3,minmax(0,1fr))}.how-step:nth-child(3):after{display:none}.how{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "steps" "detail" "levels"}.levels ul{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
 @media(max-width:540px){.how{padding:14px 16px}.how-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.how-step:after{display:none}.levels ul{grid-template-columns:1fr}.how-detail{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.toast.toast-alert,.alert-row.new,.how-icon.pulse{animation:none}.how-step,.how-icon{transition:none}}
+
+/* Second analysis: zone table, report figures, and the per-spot vibration trace in the Evidence tab. */
+.findings{margin:4px 36px 48px;padding-top:28px;border-top:1px solid var(--line)}
+.findings h2{font-size:19px;font-weight:550;letter-spacing:-.5px}
+.findings>p{font-size:13px;line-height:1.65;color:#5a5f57;margin-top:8px;max-width:1050px}
+.findings>p strong{color:var(--ink)}.findings h3{font-size:14px;font-weight:600;margin-top:22px}
+.zone-table-wrap{max-width:1100px;margin-top:16px}.zone-table-wrap td{vertical-align:middle}.zone-table-wrap td:nth-child(3){min-width:210px}
+.zone-badge{display:inline-grid;place-items:center;width:23px;height:23px;border-radius:50%;background:var(--ink);color:white;font-size:11px;font-weight:600;border:2.5px solid var(--red)}
+.zone-badge.probable{border-color:#fab219}
+.spot-link{border:0;background:none;padding:0;min-height:0;color:var(--ink);font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.spot-link:hover{background:none;color:var(--red)}
+.findings-note{font-size:12px!important;color:#77756e!important}
+.finding-figure{margin:28px 0 0;max-width:1100px}
+.finding-figure a{display:block}
+.finding-figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fcfcfb}
+.finding-figure figcaption{font-size:13px;line-height:1.6;color:#5a5f57;margin-top:10px;max-width:1000px}
+.finding-figure figcaption strong{color:var(--ink)}
+#trace-slot.trace-body{border:0;padding:0;background:none;text-align:left}
+.trace-chart{display:block;width:100%;height:auto;font-size:9px;fill:#5e5c55}
+.trace-legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11px;color:#5e5c55;margin-top:4px}
+.trace-legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.trace-note{font-size:11px;line-height:1.5;color:#77746c;margin-top:6px}
+@media(max-width:1100px){.findings{margin-left:24px;margin-right:24px}}
+@media(max-width:899px){.trace-legend,.trace-note{font-size:13px}}
+@media(max-width:540px){.findings{margin-left:16px;margin-right:16px}}
 </style>
 </head>
 <body>
@@ -208,7 +232,28 @@ header{background:white;padding-top:23px}
  </section>
  <section id="analysis"><h2>How we measured it</h2><p><strong>Pinetrack finds places worth inspecting. It does not diagnose broken rails.</strong> Phone vibration can reflect the vehicle, speed, track geometry, crossings, or other conditions. An inspector must establish the cause.</p>
 <p>Westbound and eastbound recordings are analyzed separately. Multiple phones on the same inferred pass contribute one combined result. A colored ribbon is an approximate corridor location, not a surveyed rail position or confirmed track assignment.</p>
-<details class="method-details"><summary>Review the recordings and calculation method</summary><p id="audit-method"></p><p id="grouping-note"></p><div class="audit-table-wrap"><table id="recording-table"><thead><tr><th>Recording</th><th>Direction</th><th>Pass group</th><th>Start time</th></tr></thead><tbody></tbody></table></div><p>Sources: <a href="https://docs.cpuc.ca.gov/PUBLISHED/FINAL_DECISION/106853.htm" target="_blank" rel="noopener">CPUC: double-track Expo corridor</a> · <a href="https://gtfs.org/resources/gtfs-schedule-feature-guides/shapes/" target="_blank" rel="noopener">GTFS route geometry guidance</a> · <a href="https://www.gps.gov/gps-accuracy-0" target="_blank" rel="noopener">GPS.gov: phone positioning limits</a></p><p>Vibration charts will be added separately.</p></details></section>
+<details class="method-details"><summary>Review the recordings and calculation method</summary><p id="audit-method"></p><p id="grouping-note"></p><div class="audit-table-wrap"><table id="recording-table"><thead><tr><th>Recording</th><th>Direction</th><th>Pass group</th><th>Start time</th></tr></thead><tbody></tbody></table></div><p>Sources: <a href="https://docs.cpuc.ca.gov/PUBLISHED/FINAL_DECISION/106853.htm" target="_blank" rel="noopener">CPUC: double-track Expo corridor</a> · <a href="https://gtfs.org/resources/gtfs-schedule-feature-guides/shapes/" target="_blank" rel="noopener">GTFS route geometry guidance</a> · <a href="https://www.gps.gov/gps-accuracy-0" target="_blank" rel="noopener">GPS.gov: phone positioning limits</a></p><p>Each spot’s vibration trace, in its Evidence tab, comes from the second analysis below.</p></details></section>
+ <section id="zones" class="findings" aria-labelledby="zones-title">
+  <h2 id="zones-title">A second analysis: zones confirmed by repeat trains</h2>
+  <p>A stricter second pass used <strong>13 recordings from 4 phones on 6 trains</strong>: the 11 recordings behind the map, plus two from a 12:09 eastbound train. It places each train on LA Metro’s track map by combining the GPS of every phone aboard, removes moments when a phone was handled, corrects for braking, acceleration and wheel vibration, and scores every 20 m of track against normal track at the same speed. A zone counts only when independent trains agree. Each is tested against 3,000 random shifts of the data; zones with a false-discovery rate of 10% or less are <strong>confirmed</strong>, and the rest are <strong>probable</strong>.</p>
+  <div class="audit-table-wrap zone-table-wrap"><table id="zone-table"><thead><tr><th>Zone</th><th>Status</th><th>Where</th><th>Track</th><th>Trains agreeing</th><th>q</th><th>Repair order</th><th>On our map</th><th>Street View</th></tr></thead><tbody><tr><td colspan="9">Loading zones…</td></tr></tbody></table></div>
+  <p class="findings-note">q is the chance that a zone this strong is a fluke, after testing every 20 m of track; confirmed means q ≤ 0.10. Repair order weighs that evidence by riders affected, train speed and nearby ramps. “On our map” lists the map’s spots within 50 m of the zone, about the size of the position uncertainty; select one to see it on the map. <a href="data/e_line_hotspot_zones.csv" download>Download the zone table (CSV)</a></p>
+  <h3>How it compares with the map</h3>
+  <p>Where they overlap, the two analyses agree. Confirmed zones 2 and 3 and probable zones 4 and 7 sit on spots the map already flags, and zone 4 holds the map’s roughest spot, WB-01. Zone 5 lines up with WB-05, but on the other track. Confirmed zone 1, 300 m east of Expo/Crenshaw, is not on the map. The map’s screen keeps only steady-speed stretches, and in most of this zone’s 25 m slices only one pass had them, short of its two-pass rule; where two westbound passes did, neither reached that pass’s top 10%. The second analysis corrects for braking and acceleration instead of dropping them, and adds the 12:09 train. Zone 6, at Farmdale station, is also new.</p>
+  <figure class="finding-figure">
+   <a href="figures/03_condition_strip.png" target="_blank" rel="noopener"><img src="figures/03_condition_strip.png" width="1999" height="1125" loading="lazy" decoding="async" alt="Two heat strips, westbound and eastbound, of 20 m cells from Culver City to USC, coloured from smoother (blue) to rougher (red), with numbered zone markers above and a track-height profile below."></a>
+   <figcaption><strong>Where the ride is consistently rough, on each track.</strong> Each 20 m cell compares vibration with normal track at the same speed, averaged over every train in that direction: red is rougher, blue smoother, and Culver City is on the left. The numbered markers are the zones in the table. The lower panel is track height worked out from phone tilt; its three peaks are the Culver City, La Cienega and La Brea aerial structures, and zone 2 sits about 120 m from the foot of the La Cienega ramp.</figcaption>
+  </figure>
+  <figure class="finding-figure">
+   <a href="figures/04_zone_train_traces.png" target="_blank" rel="noopener"><img src="figures/04_zone_train_traces.png" width="1999" height="1125" loading="lazy" decoding="async" alt="Four line charts of roughness around confirmed zones 1 and 2, westbound and eastbound, with one coloured line per train and a black average line that rises inside the shaded zone."></a>
+   <figcaption><strong>Independent trains agree at the two confirmed zones.</strong> Each coloured line is one train, the median of the phones aboard, and black is their average, ±700 m around the zone. Inside the shaded zones the trains rise together on both tracks: 4 of 4 eastbound trains at zone 1 and 3 of 4 at zone 2. That points to the track rather than to one train or phone. Each spot’s Evidence tab on the map shows the same kind of trace.</figcaption>
+  </figure>
+  <figure class="finding-figure">
+   <a href="figures/06_wheel_spectrogram.png" target="_blank" rel="noopener"><img src="figures/06_wheel_spectrogram.png" width="1999" height="1125" loading="lazy" decoding="async" alt="Two spectrograms of vibration frequency against train speed. On the 10:30 westbound train a dark band follows the dashed once-per-wheel-turn line; the 11:25 eastbound train shows none."></a>
+   <figcaption><strong>A wheel problem, not a track problem.</strong> Vibration by frequency and train speed, from the same phone on two trains. The dashed line is how often a wheel turns at each speed. On the 10:30 westbound train the vibration follows that line, and its double, at every speed: a wheel was shaking the car wherever it went. The 11:25 train shows no such band. Wheel-locked vibration turned up on 2 of the 6 trains. It is removed before zones are scored, and it is a separate lead for the vehicle maintenance team.</figcaption>
+  </figure>
+  <p class="findings-note">This is one morning of data, with only 2 westbound trains and no E Line ground truth yet, so every zone is an inspection candidate. The code, outputs and all 16 figures are in the <a href="https://github.com/shlokitoki/origin-weekend-pinetrack/tree/main/Pinetrack%20Zone%20Analysis" target="_blank" rel="noopener">Pinetrack Zone Analysis folder</a>.</p>
+ </section>
 </main>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script src="alert-rules.js"></script>
@@ -249,7 +294,7 @@ function selectHotspot(id,{fly=true,initial=false}={}){
  $('google-maps').href=p.google_maps;$('street-view').href=`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${f.geometry.coordinates[1]},${f.geometry.coordinates[0]}`;
  for(const [key,m] of markers){m.getElement().classList.toggle('selected',key===id);m.getElement().querySelector('.pin').setAttribute('aria-pressed',String(key===id));}
  $$('[data-hotspot]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.hotspot===id)));
- syncAlertView();renderPassEvidence();
+ syncAlertView();renderPassEvidence();renderTrace();
  if(fly&&ready)map.flyTo({center:f.geometry.coordinates,zoom:initial?16.3:17,pitch:65,bearing:routeBearing(projectAlong(f.geometry.coordinates)),duration:reducedMotion?0:1300});
 }
 function renderPassEvidence(){
@@ -260,6 +305,48 @@ function renderPassEvidence(){
   return `<details class="pass-row" open><summary><strong>${escapeHTML(e.pass_id)} · ${escapeHTML(group?.start_local||'')}</strong><span>${e.covered?(e.elevated?'Elevated':'Below threshold')+' · '+score(e.score):'Not covered'}</span></summary><p>${files.length?files.map(escapeHTML).join('<br>'):'No usable cruise samples at this slice.'}</p></details>`;
  }).join('');
 }
+// ---- Second analysis (data/zone_analysis.json): each spot's vibration trace and the zone table below the map. ----
+let zoneData=null,zoneDataFailed=false;
+const spotChainage=new Map();
+const trainColors=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300']; // the report figures' train colours
+const shortStation=name=>name==='Expo Park/USC'?'USC':name.replace(/^Expo\//,'').replace(/\/Jefferson$/,'');
+const zoneDirs=z=>z.dirs.split('+').map(d=>d==='WB'?'westbound':'eastbound');
+// Distance along the second analysis's track line (0 m at Expo Park/USC), found by projecting onto its polyline.
+function zoneChainage([lon,lat]){const P=zoneData.line,S=zoneData.line_s,k=Math.cos(radians(lat));let best=Infinity,s=0;for(let i=1;i<P.length;i++){const ax=(P[i-1][1]-lon)*k*111320,ay=(P[i-1][0]-lat)*110540,dx=(P[i][1]-P[i-1][1])*k*111320,dy=(P[i][0]-P[i-1][0])*110540,len=dx*dx+dy*dy,t=len?Math.max(0,Math.min(1,-(ax*dx+ay*dy)/len)):0,d=Math.hypot(ax+t*dx,ay+t*dy);if(d<best){best=d;s=S[i-1]+t*(S[i]-S[i-1]);}}return s;}
+function spotS(f){const id=f.properties.id;if(!spotChainage.has(id))spotChainage.set(id,zoneChainage(f.geometry.coordinates));return spotChainage.get(id);}
+// A map spot belongs to a zone when it lies within 50 m of it, about the position uncertainty of both analyses.
+const nearZone=(s,z)=>s>=z.s_from-50&&s<=z.s_to+50;
+function renderTrace(){
+ const slot=$('trace-slot');if(!selected)return;
+ if(!zoneData){slot.className='empty-card';slot.textContent=zoneDataFailed?'The vibration trace could not be loaded.':'Loading the vibration trace…';return;}
+ const p=selected.properties,c=spotS(selected),span=700,half=Math.max(12.5,(p.length_m||25)/2);
+ // West on the left and east on the right, as in the report figures; values clipped to the same −2.5 to 3.5 σ.
+ const W=320,H=172,L=24,R=6,T=16,B=20,x=s=>L+(c+span-s)/(2*span)*(W-L-R),y=v=>T+(3.5-Math.max(-2.5,Math.min(3.5,v)))/6*(H-T-B);
+ const segs=zoneData.seg_s.map((s,i)=>[s,i]).filter(([s])=>Math.abs(s-c)<=span);
+ const trains=zoneData.trains.map((t,i)=>({...t,color:trainColors[i]})).filter(t=>t.dir===(p.direction==='westbound'?'WB':'EB'));
+ // Same average as the report figure: the mean of the trains wherever at least two have a reading.
+ const average=segs.map(([,i])=>{const v=trains.map(t=>t.vals[i]).filter(v=>v!=null);return v.length>=2?v.reduce((a,b)=>a+b,0)/v.length:null;});
+ const path=vals=>{let d='',on=false;segs.forEach(([s],j)=>{const v=vals[j];if(v==null){on=false;return;}d+=(on?'L':'M')+x(s).toFixed(1)+' '+y(v).toFixed(1);on=true;});return d;};
+ const grid=[-2,0,2].map(v=>`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#e6e5e1"/><text x="${L-4}" y="${y(v)+3}" text-anchor="end">${v}</text>`).join('');
+ const stations=zoneData.stations.filter(st=>Math.abs(st.s-c)<span).map(st=>`<line x1="${x(st.s)}" x2="${x(st.s)}" y1="${T}" y2="${H-B}" stroke="#a19e95" stroke-width=".8"/><text x="${x(st.s)+3}" y="${T+8}">${escapeHTML(shortStation(st.name))}</text>`).join('');
+ const marks=zoneData.zones.filter(z=>z.s_to>=c-span&&z.s_from<=c+span&&zoneDirs(z).includes(p.direction)).map(z=>{const a=x(Math.min(c+span,z.s_to+10)),b=x(Math.max(c-span,z.s_from-10)),col=z.status==='Confirmed'?'#d03b3b':'#e0a100';return `<path d="M${a} ${T} V${T-5} H${b} V${T}" fill="none" stroke="${col}" stroke-width="1.5"/><text x="${(a+b)/2}" y="${T-8}" text-anchor="middle" fill="${col}">Zone ${z.zone}</text>`;}).join('');
+ const ticks=[[c+600,'600 m W'],[c,'this spot'],[c-600,'600 m E']].map(([s,t])=>`<text x="${x(s)}" y="${H-5}" text-anchor="middle">${t}</text>`).join('');
+ const here=zoneData.zones.filter(z=>nearZone(c,z)&&zoneDirs(z).includes(p.direction));
+ const extra=trains.filter(t=>!datasets['summary.json'].rides.some(r=>r.start_local===t.start)).map(t=>t.start);
+ slot.className='trace-body';
+ slot.innerHTML=`<svg class="trace-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="Vibration trace ±700 m around ${escapeHTML(p.id)}: ${trains.length} ${p.direction} trains and their average"><rect x="${x(c+half)}" y="${T}" width="${x(c-half)-x(c+half)}" height="${H-T-B}" fill="#d03b3b" opacity=".12"/>${grid}${stations}${marks}${trains.map(t=>`<path d="${path(segs.map(([,i])=>t.vals[i]))}" fill="none" stroke="${t.color}" stroke-width="1.5" stroke-linejoin="round" opacity=".9"/>`).join('')}<path d="${path(average)}" fill="none" stroke="#0b0b0b" stroke-width="2.2" stroke-linejoin="round"/>${ticks}<text x="${L-4}" y="${T-6}" text-anchor="end">σ</text></svg>`
+  +`<div class="trace-legend">${trains.map(t=>`<span><i style="background:${t.color}"></i>${escapeHTML(t.start)}</span>`).join('')}<span><i style="background:#0b0b0b"></i>average</span></div>`
+  +`<p class="trace-note">Roughness vs. normal track (σ) on each ${p.direction} train, ±700 m around this spot, from the second analysis below the map. Shaded: this spot. ${here.length?`It lies in zone ${here.map(z=>`${z.zone} (${z.status.toLowerCase()})`).join(' and ')}.`:'No zone from the second analysis covers it.'}${extra.length?` The ${extra.join(' and ')} train is only in the second analysis.`:''}</p>`;
+}
+function renderZoneTable(){
+ $('zone-table').querySelector('tbody').innerHTML=zoneData.zones.map(z=>{
+  const onMap=allHotspots.filter(f=>nearZone(spotS(f),z)).sort((a,b)=>b.properties.severity-a.properties.severity).map(f=>`<button type="button" class="spot-link" data-spot="${escapeHTML(f.properties.id)}">${escapeHTML(f.properties.id)}</button>${zoneDirs(z).includes(f.properties.direction)?'':' (other track)'}`).join(', ')||'Not on the map';
+  return `<tr><td><span class="zone-badge ${z.status.toLowerCase()}">${z.zone}</span></td><td>${escapeHTML(z.status)}</td><td>${escapeHTML(z.where)}</td><td>${z.dirs==='EB+WB'?'Both':z.dirs==='EB'?'Eastbound':'Westbound'}</td><td>${z.trains_agree} of ${z.n_trains}</td><td>${z.fdr_q}</td><td>${z.repair_order}</td><td>${onMap}</td><td><a href="${escapeHTML(z.street_view)}" target="_blank" rel="noopener">Open ↗</a></td></tr>`;
+ }).join('');
+ $$('#zone-table [data-spot]').forEach(b=>b.onclick=()=>goToSpot(b.dataset.spot));
+}
+function goToSpot(id){const f=allHotspots.find(h=>h.properties.id===id);if(!f)return;stopRide();if(f.properties.direction!==direction)setDirection(f.properties.direction,{fly:false});selectHotspot(id);setTab('evidence');document.querySelector('.workspace').scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'start'});}
+async function loadZoneAnalysis(){try{zoneData=await getData('zone_analysis.json');renderZoneTable();}catch{zoneDataFailed=true;$('zone-table').querySelector('tbody').innerHTML='<tr><td colspan="9">The zone table could not be loaded.</td></tr>';}renderTrace();}
 function setDirection(value,{fly=true}={}){
  stopRide();direction=value;$('direction').value=value;
  hotspots=allHotspots.filter(f=>f.properties.direction===direction).sort((a,b)=>a.properties.rank-b.properties.rank);
@@ -365,7 +452,7 @@ async function init(){
   $('audit-method').textContent=`Recorded with ${s.physical_phones} physical phones (confirmed by the team), producing ${s.recordings} exports. Median vibration is calculated within each recording and ${s.method.bin_m} m slice, then across phones within a pass, then across covered passes in the selected direction. Elevated means in the top decile of that pass’s covered slice scores. Candidate rule: ${s.method.candidate_rule} The counts shown for an area refer to its peak slice. Each pass has equal weight; phones are not independent rides.`;
   $('grouping-note').textContent='Pass groups are inferred from metadata timestamps and GPS trajectories, not verified train identities. '+s.pending_confirmation+' Treating that recording as part of the earlier pass changes the eastbound result from '+s.grouping_sensitivity.eastbound_separate_arjan_candidate_areas+' to '+s.grouping_sensitivity.eastbound_merge_arjan_with_earlier_candidate_areas+' candidate areas. GPS and route geometry do not establish which physical rail was used.';
   $('recording-table').querySelector('tbody').innerHTML=[...recordingAudit].sort((a,b)=>a.start_local.localeCompare(b.start_local)).map(r=>`<tr><td>${escapeHTML(r.file)}</td><td>${r.direction==='westbound'?'USC → Culver City':'Culver City → USC'}</td><td>${escapeHTML(r.pass_id)}</td><td>${escapeHTML(r.start_local.slice(11,19))}</td></tr>`).join('');
-  setDirection('westbound',{fly:false});
+  setDirection('westbound',{fly:false});loadZoneAnalysis();
   if(!window.maplibregl)throw new Error('The map library could not load. Check your internet connection and reload.');
   map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/positron',center:selected.geometry.coordinates,zoom:16.3,pitch:65,bearing:routeBearing(projectAlong(selected.geometry.coordinates)),maxPitch:80,attributionControl:false});
   map.on('error',e=>{if(e.sourceId==='aerial'||String(e.error?.message).includes('basemap.nationalmap.gov')){setAerial(false);return;}if(!ready&&!map.isStyleLoaded()){$('map-message').textContent='The base map could not load. Check your connection and reload.';$('map-message').hidden=false;}});
