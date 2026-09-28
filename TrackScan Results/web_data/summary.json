@@ -1,0 +1,56 @@
+{
+ "date": "2026-09-26",
+ "segment": "Expo Park/USC to Culver City (Metro E Line)",
+ "km_scanned": 9.6,
+ "rides": [
+  {
+   "ride": 1,
+   "start_local": "09:34",
+   "direction": "westbound",
+   "phones": 3
+  },
+  {
+   "ride": 2,
+   "start_local": "09:58",
+   "direction": "eastbound",
+   "phones": 2
+  },
+  {
+   "ride": 3,
+   "start_local": "10:07",
+   "direction": "eastbound",
+   "phones": 1
+  },
+  {
+   "ride": 4,
+   "start_local": "10:30",
+   "direction": "westbound",
+   "phones": 3
+  },
+  {
+   "ride": 5,
+   "start_local": "11:25",
+   "direction": "eastbound",
+   "phones": 2
+  }
+ ],
+ "recordings": 11,
+ "moving_seconds": 7130,
+ "cruise_seconds": 3530,
+ "phase_share": {
+  "cruise": 0.495,
+  "braking": 0.262,
+  "accelerating": 0.243
+ },
+ "braking_median_decel_mps2": -0.71,
+ "speed_exponent": 0.993,
+ "hotspots_listed": 9,
+ "chance_test": {
+  "bins_rough_on_all_5_rides": 2,
+  "expected_by_chance": 0.0215,
+  "shuffles": 2000,
+  "max_in_shuffles": 2,
+  "p_value": 0.0015
+ },
+ "source": "R pipeline (trackscan_R.R), Sept 26 2026 run"
+}

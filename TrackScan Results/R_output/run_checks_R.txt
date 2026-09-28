@@ -1,0 +1,151 @@
+Processing 01: 3 2026-09-26 11-43-20.xlsx
+Processing 02: Track record arjan 2026-09-26 10-23-58.xlsx
+Processing 03: Track Scan 2026-09-26 09-51-58.xlsx
+  Pause/resume metadata: using the first START for ride grouping.
+Processing 04: Track Scan 2026-09-26 10-49-47.xlsx
+Processing 05: track_brooke_1 2026-09-26 09-52-13.xlsx
+Processing 06: track_brooke_2 2026-09-26 10-14-42.xlsx
+  Pause/resume metadata: using the first START for ride grouping.
+Processing 07: track_brooke_3 2026-09-26 10-49-40.xlsx
+Processing 08: track_suhela_1 2026-09-26 09-51-59.xlsx
+Processing 09: track_suhela_3 2026-09-26 10-50-10.xlsx
+Processing 10: track_suhela_4 2026-09-26 11-43-18.xlsx
+Processing 11: track2 2026-09-26 10-14-40.xlsx
+  Pause/resume metadata: using the first START for ride grouping.
+
+Phase share of ALL moving windows (before cruise-only selection):
+# A tibble: 3 × 3
+  phase        seconds percent
+  <chr>          <int>   <dbl>
+1 accelerating    1733    24.3
+2 braking         1867    26.2
+3 cruise          3530    49.5
+
+================ COMPUTED CHECKS ================
+Recordings: 11; rides: 5. Reference: 11 recordings / 5 rides.
+# A tibble: 5 × 2
+  ride                phones
+  <chr>                <int>
+1 Ride 1 · 09:34 · WB      3
+2 Ride 2 · 09:58 · EB      2
+3 Ride 3 · 10:07 · EB      1
+4 Ride 4 · 10:30 · WB      3
+5 Ride 5 · 11:25 · EB      2
+Reference: Ride 1 09:34 WB (3); Ride 2 09:58 EB (2); Ride 3 10:07 EB (1); Ride 4 10:30 WB (3); Ride 5 11:25 EB (2).
+
+Coverage in km (chainage span of moving windows; reference mostly ~9.6, one ~6.1):
+# A tibble: 11 × 2
+   file                                        km_covered
+   <chr>                                            <dbl>
+ 1 track_suhela_1 2026-09-26 09-51-59.xlsx           9.60
+ 2 track_brooke_1 2026-09-26 09-52-13.xlsx           9.54
+ 3 Track Scan 2026-09-26 09-51-58.xlsx               6.05
+ 4 track_brooke_2 2026-09-26 10-14-42.xlsx           9.60
+ 5 track2 2026-09-26 10-14-40.xlsx                   9.59
+ 6 Track record arjan 2026-09-26 10-23-58.xlsx       9.65
+ 7 Track Scan 2026-09-26 10-49-47.xlsx               9.58
+ 8 track_suhela_3 2026-09-26 10-50-10.xlsx           9.58
+ 9 track_brooke_3 2026-09-26 10-49-40.xlsx           9.59
+10 track_suhela_4 2026-09-26 11-43-18.xlsx           9.60
+11 3 2026-09-26 11-43-20.xlsx                        9.60
+
+Moving 1-second windows: 7130; reference ~7,170.
+# A tibble: 3 × 3
+  phase        seconds percent
+  <chr>          <int>   <dbl>
+1 accelerating    1733    24.3
+2 braking         1867    26.2
+3 cruise          3530    49.5
+Reference phase split: ~49% cruise / 27% braking / 24% accelerating.
+Median long_acc while braking: -0.711 m/s^2; reference ~-0.7.
+Speed exponent: raw 0.9930; clipped b 0.9930; reference ~1.0.
+
+Computed ranked zones (station distances and labels refer to the peak):
+# A tibble: 9 × 10
+   rank start_m end_m cross_street          nearest_station               
+  <int>   <dbl> <dbl> <chr>                 <chr>                         
+1     1   16125 16250 Exposition / Budlong  Expo / Vermont                
+2     2   17200 17225 Exposition / Harvard  Expo / Western                
+3     3   17875 17900 <NA>                  Expo / Western                
+4     4   22750 22875 Jefferson / Hauser    La Cienega / Jefferson        
+5     5   24075 24100 <NA>                  La Cienega / Jefferson        
+6     6   16825 16875 Exposition / Halldale Expo / Western                
+7     7   24400 24450 <NA>                  Culver City                   
+8     8   15500 15575 Exposition / Watt     Expo Park / USC               
+9     9   22450 22475 Jefferson / Cochran   Expo / La Brea / Ethel Bradley
+  dist_to_station_m severity rides_rough rides_covering both_directions
+              <dbl>    <dbl>       <int>          <int> <lgl>          
+1              422.     3.13           5              5 TRUE           
+2              206.     2.99           3              3 TRUE           
+3              468.     2.29           4              4 TRUE           
+4              472.     2.38           4              5 TRUE           
+5              752.     1.78           4              5 TRUE           
+6              582.     2.25           3              5 TRUE           
+7              464.     2.01           3              5 TRUE           
+8              232.     1.99           3              5 TRUE           
+9              702.     1.74           3              5 TRUE           
+Reference #1: ~16100–16250 m, Exposition / Budlong, ~3.4x, 5/5, both directions.
+Reference #2: ~17200–17225 m, Exposition / Harvard, ~2.9x, 3/3.
+Reference #3: ~17875–17900 m, ~2.2x, 4/4.
+
+Chance test: 70 common-coverage bins; 2 bins hot on ALL 5 rides.
+2000 independent circular-shift shuffles: mean 0.0215, max 2; Monte Carlo p = 0.00150.
+Chance reference: 2 bins hot on all 5 rides vs ~0.05 expected by chance.
+
+Loose diagnostic comparisons (not statistical acceptance criteria):
+# A tibble: 9 × 2
+  check                                        status
+  <chr>                                        <chr> 
+1 11 recordings                                OK    
+2 5 rides                                      OK    
+3 Ride times, directions and phone counts      OK    
+4 Moving windows within 10% of 7170            OK    
+5 Phase shares within 7 percentage points      OK    
+6 Braking median within 0.3 of -0.7            OK    
+7 Speed exponent within 0.3 of 1               OK    
+8 Top-three peak locations within 150 m        OK    
+9 Chance: observed 2, mean within 0.05 of 0.05 OK    
+
+R/scipy edge handling, exact one-second boundaries, and missing-speed treatment can cause small differences.
+Repeated vibration identifies inspection candidates; it does not by itself establish a track defect.
+
+Saved:
+ /Users/shlokjain/Downloads/ORIGIN WEEKEND PRIMARY RESEARCH//TrackScan Results/R_output/hotspots_R.csv
+/Users/shlokjain/Downloads/ORIGIN WEEKEND PRIMARY RESEARCH//TrackScan Results/R_output/recordings_summary_R.csv
+/Users/shlokjain/Downloads/ORIGIN WEEKEND PRIMARY RESEARCH//TrackScan Results/R_output/chart_R.png 
+
+Package/R versions for reproducibility:
+R version 4.6.1 (2026-06-24)
+Platform: aarch64-apple-darwin23
+Running under: macOS Tahoe 26.5.1
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] C.UTF-8/C.UTF-8/C.UTF-8/C/C.UTF-8/C.UTF-8
+
+time zone: America/Los_Angeles
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] patchwork_1.3.2 ggplot2_4.0.3   dplyr_1.2.1    
+
+loaded via a namespace (and not attached):
+ [1] bit_4.6.0          gtable_0.3.6       crayon_1.5.3       compiler_4.6.1    
+ [5] tidyselect_1.2.1   stringr_1.6.0      parallel_4.6.1     signal_1.8-1      
+ [9] tidyr_1.3.2        textshaping_1.0.5  systemfonts_1.3.2  scales_1.4.0      
+[13] readxl_1.5.0       lattice_0.22-9     readr_2.2.0        R6_2.6.1          
+[17] labeling_0.4.3     generics_0.1.4     MASS_7.3-65        tibble_3.3.1      
+[21] pillar_1.11.1      RColorBrewer_1.1-3 tzdb_0.5.0         rlang_1.3.0       
+[25] utf8_1.2.6         stringi_1.8.7      S7_0.2.2           bit64_4.8.2       
+[29] cli_3.6.6          withr_3.0.3        magrittr_2.0.5     grid_4.6.1        
+[33] vroom_1.7.1        hms_1.1.4          lifecycle_1.0.5    vctrs_0.7.3       
+[37] glue_1.8.1         farver_2.1.2       cellranger_1.1.0   ragg_1.5.2        
+[41] zoo_1.9-1          purrr_1.2.2        tools_4.6.1        pkgconfig_2.0.3   
+
+Normalization, phase, coverage, ranking, and shuffle invariants: PASS

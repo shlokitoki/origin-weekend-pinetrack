@@ -1,0 +1,591 @@
+stop_name,stop_lat,stop_lon
+Jefferson / 10th,34.025471,-118.328402
+Adams / Fairfax,34.032361,-118.370491
+Adams / Vermont,34.032672,-118.291204
+Arlington / Martin Luther King Jr,34.011005,-118.318354
+Arlington / 39th,34.014466,-118.318116
+Arlington / 42nd,34.007395,-118.318344
+La Brea / Exposition,34.024897,-118.355274
+Coliseum / Cherrywood,34.018156,-118.329212
+Coliseum / Grayburn,34.018146,-118.332096
+Crenshaw / Martin Luther King Jr,34.010754,-118.334947
+Crenshaw / Coliseum,34.018517,-118.334952
+Crenshaw / Stocker,34.008237,-118.33494
+Crenshaw / 23rd,34.036613,-118.332707
+Crenshaw / 29th,34.02933,-118.334945
+Crenshaw / 30th,34.027912,-118.334946
+43rd / Crenshaw,34.005556,-118.3336
+43rd / Crenshaw,34.005441,-118.3335
+Crenshaw / 43rd,34.005688,-118.333805
+Crenshaw / 48th,34.000291,-118.330613
+Crenshaw / 43rd,34.004774,-118.333091
+Obama / Hauser,34.021449,-118.366059
+Jefferson / Flower,34.021417,-118.278482
+Jefferson / Main,34.018632,-118.272903
+La Cienega Station Terminal,34.026183,-118.370916
+Vernon / Main,34.003735,-118.27423
+Crenshaw / Exposition,34.022201,-118.334942
+Crenshaw / Exposition,34.022825,-118.335243
+Flower / 23rd,34.030324,-118.273023
+Exposition / University,34.018015,-118.286718
+Exposition / Denker,34.018081,-118.304689
+Exposition / Halldale,34.018075,-118.302657
+Exposition / Raymond,34.018063,-118.297532
+Exposition / Budlong,34.018058,-118.296007
+Exposition / Harvard,34.018085,-118.306382
+Exposition / Normandie,34.018065,-118.299848
+Exposition / Vermont,34.018475,-118.291864
+Exposition / Western,34.018123,-118.30857
+Exposition / Vermont,34.018034,-118.291212
+Fairfax / Adams,34.032632,-118.370832
+Figueroa / Martin Luther King Jr,34.010707,-118.282575
+Exposition / Figueroa,34.018438,-118.283
+Washington / Exposition Sta Dwy,34.027782,-118.38751
+Robertson / Venice,34.027547,-118.389833
+Hoover / 32nd,34.02505,-118.284029
+Venice / Culver City Station,34.028593,-118.389224
+Grand / Adams,34.026297,-118.272212
+Harbor Transitway / 37th St / USC,34.017657,-118.279922
+Flower / Washington,34.03364,-118.271067
+Mc Clintock / Jefferson,34.02553,-118.286862
+Jefferson / Mc Clintock,34.025394,-118.287403
+Hill / Martin Luther King Jr,34.011487,-118.280294
+Vernon / Arlington,34.003836,-118.318376
+Vernon / Crenshaw,34.003796,-118.331376
+Martin Luther King Jr / 4th,34.010653,-118.3216
+Martin Luther King Jr / 9th,34.010776,-118.327213
+Martin Luther King Jr / Arlington,34.01094,-118.31807
+Martin Luther King Jr / Budlong,34.010745,-118.295572
+Martin Luther King Jr / Coliseum,34.017796,-118.346202
+Martin Luther King Jr / Degnan,34.010799,-118.331572
+Martin Luther King Jr / Denker,34.010733,-118.304801
+Martin Luther King Jr / Figueroa,34.010997,-118.281992
+Martin Luther King Jr / Gramercy,34.01072,-118.314067
+Martin Luther King Jr / Hillcrest,34.016565,-118.34425
+Martin Luther King Jr / Hoover,34.010943,-118.287479
+Martin Luther King Jr / Nicolet,34.019724,-118.349242
+Martin Luther King Jr / Normandie,34.010738,-118.300429
+Martin Luther King Jr / Vermont,34.010753,-118.291118
+Martin Luther King Jr / Western,34.010734,-118.308533
+Fairfax / Adams,34.032121,-118.371068
+Martin Luther King Jr / Sutro,34.010758,-118.323708
+Martin Luther King Jr / Crenshaw,34.011668,-118.336304
+La Brea / Don Lorenzo,34.000654,-118.358731
+Leimert / Stocker,34.007978,-118.326317
+Leimert / Sutro,34.010385,-118.323242
+Main / Martin Luther King Jr,34.010864,-118.274154
+Maple / 36th,34.015009,-118.270944
+Maple / 38th,34.013344,-118.271998
+Marlton / Martin Luther King Jr,34.012216,-118.338048
+Marlton / Thrive,34.010983,-118.339173
+Figueroa / Jefferson,34.022235,-118.279609
+Figueroa / Adams,34.027979,-118.276293
+Figueroa / 30th,34.025233,-118.277688
+National / Venice,34.029728,-118.388401
+Normandie / Martin Luther King Jr,34.010646,-118.300046
+23rd / Flower,34.030002,-118.272902
+Obama / Cloverdale,34.021679,-118.360636
+Obama / Hauser,34.021707,-118.366188
+Obama / La Brea,34.02167,-118.356113
+Obama / La Cienega,34.021827,-118.372102
+Obama / Sutro,34.018597,-118.323367
+Adams / Normandie,34.032838,-118.300733
+Broadway / 30th,34.022375,-118.271509
+Broadway / 36th,34.016425,-118.275704
+Broadway / 38th,34.014306,-118.27704
+Broadway / 42nd,34.007197,-118.278201
+Broadway / Jefferson,34.018932,-118.273742
+Adams / La Brea,34.032435,-118.350596
+Fairfax / Adams,34.032801,-118.370437
+Figueroa / Exposition,34.01879,-118.281793
+Figueroa / Flower,34.016348,-118.2826
+Figueroa / 23rd,34.030962,-118.274042
+Figueroa / 39th,34.01385,-118.282592
+Figueroa / 41st,34.009094,-118.282579
+Figueroa / 42nd,34.007267,-118.282566
+Figueroa / 43rd,34.005775,-118.282558
+Figueroa / 47th,34.000916,-118.282538
+Figueroa / Adams,34.027929,-118.275973
+Figueroa / 43rd,34.005284,-118.282862
+Figueroa / Vernon,34.003574,-118.282544
+Figueroa / Washington,34.034572,-118.27174
+23rd / Grand,34.029274,-118.270766
+Grand / 30th,34.023191,-118.274191
+Grand / Jefferson,34.020455,-118.275948
+Adams / Grand,34.026463,-118.271978
+Hoover / Union,34.034676,-118.283827
+Hoover / Santa Monica Fwy,34.03691,-118.283851
+Hoover / 28th,34.029285,-118.283792
+Hoover / 30th,34.027672,-118.283797
+Hoover / 32nd,34.025381,-118.283759
+Hoover / Adams,34.031981,-118.283821
+Hoover / Washington,34.039545,-118.283913
+La Brea / Coliseum,34.018678,-118.355472
+La Brea / Obama,34.02182,-118.355468
+La Brea / Roseland,34.026982,-118.353682
+La Brea / 21st,34.03871,-118.34816
+La Brea / 23rd,34.036107,-118.349225
+La Brea / Adams,34.032294,-118.350869
+La Brea / Jefferson,34.02536,-118.354751
+La Brea / Westhaven,34.028574,-118.352573
+La Cienega / Clemson,34.02405,-118.372055
+La Cienega / Jefferson,34.026993,-118.3719
+Jefferson / La Cienega,34.026414,-118.371577
+Main / 43rd,34.005891,-118.273828
+Main / 46th,34.001746,-118.274121
+Main / 47th,34.000304,-118.27412
+Main / 41st,34.008379,-118.273836
+Main / Vernon,34.003978,-118.274129
+Main / 41st,34.007968,-118.274148
+Main / 43rd,34.005442,-118.274137
+Normandie / Exposition,34.018645,-118.300062
+Normandie / Leighton,34.013088,-118.300052
+Normandie / Santa Monica Fwy,34.0368,-118.30015
+Normandie / 24th,34.034409,-118.300131
+Normandie / 29th,34.028996,-118.300112
+Normandie / 36th,34.021747,-118.300076
+Normandie / 39th,34.015391,-118.300053
+Normandie / 42nd,34.0072,-118.30006
+Normandie / 46th,34.001528,-118.30005
+Normandie / Adams,34.033013,-118.300123
+Normandie / Jefferson,34.025794,-118.300114
+Normandie / Vernon,34.003493,-118.30005
+Robertson / Beverlywood,34.038128,-118.388278
+Robertson / Cattaraugus,34.034696,-118.389193
+Robertson / Kincardine,34.033448,-118.389494
+Robertson / 24th,34.039525,-118.387902
+National / Venice,34.029513,-118.388542
+Vermont / Exposition,34.018622,-118.291386
+Vermont / Leighton,34.013505,-118.291388
+Vermont / 24th,34.034254,-118.291387
+Vermont / 29th,34.028253,-118.291386
+Vermont / 36th,34.02229,-118.291382
+Vermont / 39th,34.015948,-118.29139
+Vermont / 42nd,34.007191,-118.291386
+Vermont / 46th,34.001926,-118.291381
+Vermont / Adams,34.033045,-118.291383
+Western / Exposition,34.017987,-118.309045
+Western / Santa Monica Fwy,34.037509,-118.308827
+Western / 29th,34.028122,-118.308766
+Western / 36th,34.021753,-118.308735
+Western / 38th,34.016812,-118.30874
+Western / 39th,34.014473,-118.308748
+Western / 42nd,34.007142,-118.308754
+Western / Adams,34.032516,-118.308805
+Western / Jefferson,34.025349,-118.308745
+Western / Washington,34.039729,-118.308838
+Santa Rosalia / Buckingham,34.01215,-118.342054
+Santa Rosalia / Hillcrest,34.01374,-118.34629
+Santa Rosalia / West,34.012821,-118.344475
+Stocker / Don Felipe,34.005855,-118.338969
+Stocker / Don Lorenzo,34.001264,-118.354949
+Stocker / Don Miguel,34.004786,-118.350394
+Stocker / Angeles Vista,34.006909,-118.337337
+Stocker / Crenshaw,34.008233,-118.335353
+Stocker / Presidio,34.004811,-118.340908
+Stocker / Valley Ridge,34.004572,-118.347526
+Venice / Cattaraugus,34.032672,-118.382018
+Venice / Culver,34.026592,-118.392815
+Venice / Bagley,34.025407,-118.39477
+Venice / Cadillac,34.037529,-118.373452
+Venice / Helms,34.030909,-118.385112
+Venice / Hughes,34.023115,-118.398775
+Venice / Oak,34.039897,-118.275735
+Venice / Fairfax,34.039878,-118.36931
+Venice / La Cienega,34.035103,-118.377702
+Vermont / 35th,34.023793,-118.291377
+39th / Figueroa,34.014145,-118.282514
+43rd / Degnan,34.00592,-118.331203
+Adams / 4th,34.032541,-118.321278
+Adams / 7th,34.032531,-118.324076
+Adams / Arlington,34.032556,-118.317835
+Adams / West,34.032672,-118.340765
+Adams / Chester,34.029264,-118.278713
+Adams / Cimarron,34.032568,-118.315334
+Adams / Edgehill,34.032515,-118.328832
+Adams / Grand,34.026456,-118.272473
+Adams / Halldale,34.03263,-118.302944
+Adams / Hauser,34.032399,-118.362781
+Adams / La Salle,34.032624,-118.305112
+Adams / Magnolia,34.032661,-118.286632
+Adams / Budlong,34.032655,-118.296121
+Adams / Dunsmuir,34.032405,-118.359695
+Adams / Figueroa,34.028138,-118.276201
+Adams / Harcourt,34.032456,-118.346173
+Adams / Hill,34.025809,-118.270533
+Adams / Hoover,34.031489,-118.283741
+Adams / Normandie,34.03264,-118.29999
+Adams / Redondo,34.032416,-118.356015
+Adams / Saint Andrews,34.032594,-118.311442
+Adams / Western,34.032608,-118.309205
+Adams / Severance,34.030306,-118.281043
+Adams / Thurman,34.032377,-118.368098
+Jefferson / 12th,34.025478,-118.331821
+Jefferson / 4th,34.025459,-118.321399
+Jefferson / 7th,34.025472,-118.324934
+Jefferson / Alsace,34.025383,-118.358213
+Jefferson / Arlington,34.025447,-118.317815
+Jefferson / Buckingham,34.025448,-118.340682
+Jefferson / Cimarron,34.025436,-118.315732
+Jefferson / Clyde,34.026203,-118.368751
+Jefferson / Crenshaw,34.025478,-118.334765
+Jefferson / Denker,34.025393,-118.304396
+Jefferson / Farmdale,34.025429,-118.346194
+Jefferson / Halldale,34.025389,-118.302736
+Jefferson / Hauser,34.025876,-118.365383
+Jefferson / Mc Clintock,34.024857,-118.286814
+Jefferson / Royal,34.022735,-118.282133
+Jefferson / Budlong,34.025389,-118.296066
+Jefferson / Cochran,34.025445,-118.361348
+Jefferson / Figueroa,34.021689,-118.279757
+Jefferson / Grand,34.019975,-118.27588
+Jefferson / Harcourt,34.025416,-118.350916
+Jefferson / Hoover,34.023299,-118.283393
+Jefferson / Hoover,34.023762,-118.283797
+Jefferson / La Brea,34.025408,-118.354576
+Jefferson / Normandie,34.025392,-118.300399
+Jefferson / Saint Andrews,34.025434,-118.312175
+Jefferson / Vermont,34.025385,-118.291201
+Jefferson / Western,34.025441,-118.308568
+Vernon / 11th,34.003796,-118.329195
+Vernon / 4th,34.003818,-118.321207
+Vernon / 6th,34.003812,-118.323394
+Vernon / 8th,34.003803,-118.325575
+Arlington / Vernon,34.003982,-118.318093
+Vernon / Denker,34.003597,-118.304699
+Vernon / Budlong,34.003571,-118.296042
+Vernon / Figueroa,34.00364,-118.282363
+Vernon / Gramercy,34.003843,-118.313651
+Vernon / Harvard,34.003597,-118.306897
+Vernon / Hoover,34.003605,-118.286807
+Vernon / Normandie,34.003584,-118.299839
+Vernon / Vermont,34.003578,-118.291215
+Washington / 10th,34.039767,-118.326838
+Washington / 4th,34.039784,-118.321428
+Washington / 6th,34.039775,-118.323804
+Washington / Arlington,34.039793,-118.317866
+Washington / Bonsallo,34.03582,-118.275497
+Washington / Crenshaw,34.039753,-118.330729
+Washington / Hauser,34.039137,-118.359988
+Washington / New England,34.039907,-118.287882
+Washington / Oak,34.03691,-118.27791
+Washington / Budlong,34.03987,-118.296375
+Washington / Curson,34.037083,-118.363996
+Washington / Figueroa,34.034149,-118.271811
+Washington / Gramercy,34.039816,-118.313502
+Washington / Harvard,34.039839,-118.304455
+Washington / Hoover,34.039817,-118.284297
+Washington / Normandie,34.039854,-118.300494
+Washington / Rimpau,34.039715,-118.343622
+Washington / Union,34.038474,-118.281361
+Washington / Vermont,34.039888,-118.291226
+Washington / Thurman,34.035792,-118.366549
+Washington / Vineyard,34.039724,-118.340123
+Adams / Crenshaw,34.032499,-118.334668
+Jefferson / Broadway,34.019143,-118.274043
+Washington / Pickford,34.039729,-118.337525
+Jefferson Loop Layover,34.025519,-118.328941
+Jefferson / 10th,34.025727,-118.328073
+Adams / Congress,34.032829,-118.302261
+Adams / Saint James,34.030211,-118.28032
+Washington Fairfax Hub,34.035767,-118.369417
+Arlington / Martin Luther King Jr,34.010621,-118.318115
+Arlington / 39th,34.01474,-118.318355
+Arlington / 42nd,34.007121,-118.318105
+Arlington / 48th,34.000198,-118.318257
+Arlington / Vernon,34.003421,-118.318295
+Jefferson / Figueroa,34.022261,-118.280333
+Broadway / Martin Luther King Jr,34.010837,-118.278513
+Cadillac / La Cienega,34.038299,-118.376951
+Venice / Cadillac,34.037637,-118.374132
+Coliseum / Cherrywood,34.018355,-118.328882
+Coliseum / Grayburn,34.018345,-118.331767
+Crenshaw / Martin Luther King Jr,34.01019,-118.335255
+Crenshaw / Coliseum,34.017967,-118.335253
+Crenshaw / Homeland,34.005443,-118.333982
+Crenshaw / 23rd,34.036592,-118.33305
+Crenshaw / 29th,34.029604,-118.33525
+Crenshaw / 30th,34.027362,-118.335248
+Crenshaw / 39th,34.014419,-118.335255
+Crenshaw / Jefferson,34.025815,-118.335242
+Jefferson / Main,34.018702,-118.272408
+Vernon / Main,34.003964,-118.274307
+Exposition / Trousdale,34.018459,-118.286944
+Exposition / Halldale,34.018506,-118.302721
+Exposition / Raymond,34.018497,-118.297533
+Exposition / Catalina,34.018488,-118.294256
+Exposition / Harvard,34.018521,-118.306503
+Exposition / Normandie,34.018498,-118.30051
+Exposition / Watt,34.01853,-118.288614
+Figueroa / USC McCarthy,34.020372,-118.281135
+Figueroa / Martin Luther King Jr,34.011517,-118.282887
+Exposition / Figueroa,34.01801,-118.282992
+Figueroa / Venice,34.037235,-118.270389
+Grand / Adams,34.02666,-118.272328
+Harbor Transitway / 37th St / USC,34.017818,-118.280305
+Jefferson / Royal,34.023027,-118.282134
+Jefferson / La Brea,34.025659,-118.355171
+Martin Luther King Jr / Arlington,34.010686,-118.318462
+Martin Luther King Jr / Budlong,34.010992,-118.295514
+Martin Luther King Jr / Coliseum,34.017458,-118.34618
+Martin Luther King Jr / Degnan,34.011048,-118.331144
+Martin Luther King Jr / Denker,34.010986,-118.304373
+Martin Luther King Jr / Figueroa,34.011273,-118.282458
+Martin Luther King Jr / Gramercy,34.010972,-118.314134
+Martin Luther King Jr / Hillcrest,34.016276,-118.344301
+Martin Luther King Jr / Hoover,34.011193,-118.287565
+Martin Luther King Jr / Nicolet,34.019441,-118.349297
+Martin Luther King Jr / Normandie,34.010987,-118.300994
+Martin Luther King Jr / Roxton,34.010913,-118.321178
+Vermont / Martin Luther King Jr,34.011137,-118.291386
+Martin Luther King Jr / Western,34.011004,-118.309415
+Martin Luther King Jr / Westside,34.011024,-118.326778
+Martin Luther King Jr / Sutro,34.011005,-118.323478
+Martin Luther King Jr / Figueroa,34.011011,-118.283146
+Martin Luther King Jr / Vermont,34.01102,-118.292016
+Western / Martin Luther King Jr,34.011024,-118.309056
+La Brea / Don Lorenzo,34.000578,-118.359024
+Leimert / Stocker,34.008024,-118.326601
+Leimert / Sutro,34.010561,-118.323355
+Main / Martin Luther King Jr,34.010947,-118.273851
+Maple / 38th,34.013037,-118.272003
+Marlton / Santa Rosalia,34.010549,-118.339496
+Exposition / Watt,34.018024,-118.28846
+National / Robertson,34.031292,-118.390682
+Normandie / Martin Luther King Jr,34.011057,-118.300285
+Normandie / 48th,34.00025,-118.300289
+Obama / Cloverdale,34.021425,-118.360963
+Obama / Martin Luther King Jr,34.021406,-118.352548
+Obama / Village Green,34.021418,-118.358075
+Obama / La Brea,34.021416,-118.355851
+Obama / La Cienega,34.021564,-118.372024
+Obama / Sutro,34.018768,-118.322968
+Broadway / Martin Luther King Jr,34.011337,-118.278845
+Broadway / 30th,34.022446,-118.271803
+Broadway / 36th,34.016329,-118.275403
+Broadway / 38th,34.014183,-118.276772
+Broadway / 42nd,34.007573,-118.278506
+Broadway / 47th,34.000297,-118.278478
+Broadway / Jefferson,34.019391,-118.273786
+Broadway / Vernon,34.003973,-118.278494
+Washington Fairfax Hub,34.035671,-118.369126
+Fairfax / Venice,34.039525,-118.369671
+Figueroa / Exposition,34.019194,-118.28192
+Figueroa / State,34.016268,-118.282907
+Figueroa / 23rd,34.030645,-118.274592
+Figueroa / 30th,34.02486,-118.278243
+Figueroa / 39th,34.013767,-118.282895
+Figueroa / 41st,34.007623,-118.282874
+Figueroa / 41st,34.009783,-118.282882
+Figueroa / 47th,34.000831,-118.282841
+Figueroa Way / Adams,34.028545,-118.27465
+Figueroa / Jefferson,34.021742,-118.280262
+Figueroa / Vernon,34.003958,-118.282849
+Figueroa / Venice,34.037236,-118.270046
+Grand / 23rd,34.028906,-118.270547
+Jefferson / Grand,34.020515,-118.276456
+Grand / 23rd,34.02931,-118.270634
+Hoover / Santa Monica Fwy,34.036723,-118.284151
+Hoover / 24th,34.034538,-118.284134
+Hoover / 28th,34.029504,-118.284097
+Hoover / 30th,34.027122,-118.284099
+Hoover / Adams,34.03143,-118.284123
+Hoover / Washington,34.039671,-118.284224
+La Brea / Coliseum,34.018568,-118.355712
+La Brea / Obama,34.021735,-118.355777
+La Brea / Roseland,34.027408,-118.353727
+La Brea / 23rd,34.036076,-118.349528
+La Brea / Adams,34.032227,-118.351255
+La Brea / Westhaven,34.028983,-118.352684
+La Cienega / Clemson,34.024362,-118.372343
+La Cienega / Jefferson,34.026129,-118.372249
+Main / Vernon,34.003649,-118.273824
+Main / 46th,34.001885,-118.273818
+Normandie / Exposition,34.017872,-118.300306
+Normandie / Leighton,34.01295,-118.300289
+Normandie / Santa Monica Fwy,34.037326,-118.300399
+Normandie / 24th,34.034683,-118.30037
+Normandie / 29th,34.02927,-118.30035
+Normandie / 36th,34.022021,-118.300315
+Normandie / 39th,34.015665,-118.300292
+Normandie / 42nd,34.007474,-118.300299
+Normandie / 46th,34.002061,-118.300289
+Normandie / Adams,34.032463,-118.300355
+Normandie / Jefferson,34.025244,-118.300353
+Normandie / Vernon,34.003877,-118.300289
+Robertson / Beverlywood,34.038452,-118.388504
+Robertson / Cattaraugus,34.034615,-118.389526
+Robertson / Kincardine,34.033108,-118.389991
+Robertson / 24th,34.039901,-118.388111
+Vermont / Exposition,34.018511,-118.291692
+Vermont / Leighton,34.013367,-118.291691
+Vermont / 24th,34.034644,-118.291643
+Vermont / 29th,34.028829,-118.291689
+Vermont / 36th,34.021795,-118.291691
+Vermont / 39th,34.015634,-118.291696
+Vermont / 42nd,34.007465,-118.291693
+Vermont / 46th,34.001376,-118.291682
+Vermont / Adams,34.032495,-118.291685
+Vermont / Jefferson,34.025702,-118.291688
+Vermont / Vernon,34.003871,-118.291697
+Western / Santa Monica Fwy,34.037527,-118.309153
+Western / 36th,34.021614,-118.309039
+Western / 38th,34.016586,-118.30905
+Western / 39th,34.014775,-118.309053
+Western / 42nd,34.007416,-118.309059
+Western / 48th,34.000219,-118.309065
+Western / Jefferson,34.025755,-118.309054
+Western / Vernon,34.003363,-118.309057
+Santa Rosalia / West,34.012721,-118.344861
+Santa Rosalia / Buckingham,34.012058,-118.342446
+Santa Rosalia / Hillcrest,34.013514,-118.346329
+Stocker / Don Felipe,34.006066,-118.339152
+Stocker / Don Lorenzo,34.001384,-118.355253
+Stocker / Don Miguel,34.005008,-118.35056
+Stocker / Santa Rosalia,34.006993,-118.337634
+Stocker / Crenshaw,34.008494,-118.33539
+Stocker / Presidio,34.004994,-118.341134
+Stocker / Valley Ridge,34.004763,-118.347141
+Venice / Bagley,34.025741,-118.395055
+Venice / Cattaraugus,34.032821,-118.382616
+Venice / Culver,34.027001,-118.392909
+Venice / Helms,34.031221,-118.385401
+Venice / Hughes,34.023602,-118.398774
+Venice / National,34.029408,-118.38861
+Venice / Oak,34.039942,-118.275332
+Venice / Fairfax,34.039875,-118.370155
+Venice / La Cienega,34.035756,-118.377437
+Venice / Robertson,34.028471,-118.390309
+Vermont / 35th,34.023655,-118.291687
+Vermont / Martin Luther King Jr,34.011053,-118.291693
+39th / Figueroa,34.013939,-118.282249
+43rd / Degnan,34.006066,-118.331286
+Leimert / 43rd,34.005554,-118.329621
+Adams / 10th,34.032712,-118.328226
+Adams / 13th,34.032699,-118.331771
+Adams / 4th,34.032739,-118.321064
+Adams / 6th,34.03273,-118.32344
+Adams / Arlington,34.032754,-118.317506
+Adams / Buckingham,34.032474,-118.340734
+Adams / Chester,34.029309,-118.278311
+Adams / Cimarron,34.032765,-118.315334
+Adams / Crenshaw,34.032697,-118.334751
+Adams / Hauser,34.032597,-118.362452
+Adams / La Salle,34.032862,-118.305555
+Adams / Magnolia,34.032859,-118.28663
+Adams / Budlong,34.032853,-118.295786
+Adams / Dunsmuir,34.032604,-118.359297
+Adams / Fairfax,34.032559,-118.370485
+Adams / Figueroa,34.028163,-118.275756
+Flower / Adams,34.027429,-118.27509
+Adams / Harcourt,34.032654,-118.345844
+Adams / Hill,34.025827,-118.271081
+Adams / Hoover,34.031922,-118.284211
+Adams / La Brea,34.032635,-118.3506
+Adams / Redondo,34.032614,-118.356066
+Adams / Saint Andrews,34.032792,-118.311443
+Adams / Vermont,34.032868,-118.291865
+Adams / Western,34.032807,-118.30871
+Adams / Thurman,34.032565,-118.36768
+Jefferson / Vermont,34.025636,-118.291862
+Vernon / 4th,34.003564,-118.321536
+Vernon / 6th,34.003558,-118.323723
+Vernon / 8th,34.003549,-118.325904
+Vernon / Arlington,34.003581,-118.318375
+Vernon / Denker,34.00385,-118.30437
+Vernon / Leimert,34.003539,-118.330903
+Vernon / Budlong,34.003825,-118.295709
+Vernon / Gramercy,34.003589,-118.31398
+Vernon / Harvard,34.00385,-118.306568
+Vernon / Hoover,34.00385,-118.287468
+Vernon / Normandie,34.003842,-118.299939
+Vernon / Vermont,34.003831,-118.29204
+Vernon / Western,34.003594,-118.30914
+Vernon / Western,34.003848,-118.308679
+Washington / Hauser,34.039337,-118.360174
+Washington / Oak,34.036945,-118.277342
+Washington / Curson,34.03728,-118.364182
+Figueroa / Washington,34.034621,-118.272057
+Washington / Flower,34.034181,-118.271244
+Washington / Rimpau,34.039964,-118.343788
+Washington / Union,34.038563,-118.280926
+Washington / Western,34.039823,-118.30866
+Washington / Thurman,34.03587,-118.367005
+Washington / Vineyard,34.039979,-118.339629
+Jefferson / Broadway,34.01921,-118.273545
+Washington / Bonnie Brae,34.039802,-118.28362
+Washington / Cherry,34.036351,-118.276033
+Washington / West,34.039977,-118.337104
+Washington / Fairfax,34.034824,-118.369291
+Cadillac / La Cienega,34.038063,-118.376867
+Washington Fairfax Terminal,34.035276,-118.369075
+Washington Fairfax Hub,34.035653,-118.368743
+Hill / Adams,34.026021,-118.270557
+Washington / Figueroa,34.034632,-118.272249
+National / Robertson,34.03096,-118.390624
+23rd / Flower,34.030146,-118.272716
+23rd / Figueroa,34.030969,-118.274488
+23rd / Estrella,34.032104,-118.276746
+23rd / Scarff,34.033376,-118.279621
+23rd / Union,34.034939,-118.283142
+23rd / Union,34.034921,-118.283617
+23rd / Oak,34.033407,-118.280179
+23rd / Estrella,34.031972,-118.276956
+23rd / Figueroa,34.030793,-118.274593
+Grand / 23rd,34.029236,-118.270333
+Grand / 30th,34.023553,-118.274305
+Jefferson / Figueroa,34.021952,-118.279699
+Jefferson / Budlong,34.025645,-118.296232
+Jefferson / Normandie,34.025645,-118.300565
+Jefferson / Halldale,34.025643,-118.302572
+Jefferson / Denker,34.025651,-118.304555
+Jefferson / Western,34.025694,-118.309229
+Jefferson / Saint Andrews,34.025688,-118.31173
+Jefferson / Cimarron,34.025688,-118.314974
+Jefferson / Arlington,34.025702,-118.317981
+Jefferson / 4th,34.025713,-118.32107
+Jefferson / 7th,34.025726,-118.324605
+Jefferson / 12th,34.025732,-118.331492
+Jefferson / Crenshaw,34.025726,-118.335426
+Jefferson / Buckingham,34.025701,-118.340353
+Jefferson / Farmdale,34.025683,-118.345865
+Jefferson / Harcourt,34.025669,-118.350587
+Jefferson / Alsace,34.025637,-118.357884
+Jefferson / Cochran,34.025717,-118.361478
+Jefferson / Hauser,34.026147,-118.36551
+Jefferson / Clyde,34.026491,-118.369046
+Broadway / Jefferson,34.018981,-118.274052
+Broadway / Jefferson,34.019345,-118.273476
+Broadway / Martin Luther King Jr,34.011495,-118.278185
+Broadway / Vernon,34.004084,-118.27819
+Western / Adams,34.03257,-118.309112
+Maple / 36th,34.014737,-118.270877
+Martin Luther King Jr / Crenshaw,34.010876,-118.335512
+Vernon / Broadway,34.003931,-118.278837
+Vernon / Figueroa,34.003896,-118.282304
+Vernon / Broadway,34.003686,-118.278011
+Fairfax / Venice,34.039754,-118.369461
+Venice / Figueroa,34.037566,-118.270673
+Venice / Figueroa,34.037902,-118.270876
+Western / Exposition,34.018859,-118.308745
+Vermont / Washington,34.039738,-118.291707
+Vermont / Jefferson,34.025235,-118.291683
+Vermont / Vernon,34.003431,-118.291696
+Vermont / Jefferson,34.025923,-118.291378
+La Brea / 21st,34.038673,-118.348503
+Western / 29th,34.02924,-118.30908
+Vernon / 11th,34.003544,-118.329029
+Crenshaw / 39th,34.014832,-118.33495
+Crenshaw / Stocker,34.008171,-118.33524
+Marlton / King Layover,34.012108,-118.338147
+Vermont / Vernon,34.003981,-118.291391
+Crenshaw / Washington,34.039556,-118.331405
+Crenshaw / Adams,34.032283,-118.335218
+Crenshaw / Jefferson,34.025188,-118.335249
+Crenshaw / Vernon,34.003223,-118.331776
+Crenshaw / Jefferson,34.026013,-118.334945
+Crenshaw / Adams,34.0329,-118.334742
+Martin Luther King Jr / Crenshaw,34.010821,-118.334654
+Broadway / Martin Luther King Jr,34.011355,-118.278185
+Western / Vernon,34.004133,-118.308756
+Western / Martin Luther King Jr,34.011272,-118.308753

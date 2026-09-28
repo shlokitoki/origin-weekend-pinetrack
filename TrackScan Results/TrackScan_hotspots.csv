@@ -1,0 +1,12 @@
+rank,between,cross_street,nearest_station,dist_to_station_m,length_m,rides_rough,rides_covering,both_directions,severity,lat,lon,google_maps,start_m,end_m
+1,Expo / Vermont → Expo / Western,Exposition / Budlong,Expo / Vermont,409,150,5,5,True,3.4,34.018292,-118.295968,"https://www.google.com/maps?q=34.018292,-118.295968",16100,16250
+2,Expo / Vermont → Expo / Western,Exposition / Harvard,Expo / Western,207,25,3,3,True,2.9,34.018324,-118.306671,"https://www.google.com/maps?q=34.018324,-118.306671",17200,17225
+3,Expo / Western → Expo / Crenshaw E-Line,,Expo / Western,468,25,4,4,True,2.2,34.018405,-118.313987,"https://www.google.com/maps?q=34.018405,-118.313987",17875,17900
+4,La Cienega / Jefferson → Culver City,,La Cienega / Jefferson,752,100,5,5,True,1.8,34.027161,-118.380217,"https://www.google.com/maps?q=34.027161,-118.380217",24075,24175
+5,Expo / La Brea / Ethel Bradley → La Cienega / Jefferson,La Cienega Station Terminal,La Cienega / Jefferson,123,25,4,5,True,2.0,34.026293,-118.370791,"https://www.google.com/maps?q=34.026293,-118.370791",23200,23225
+6,La Cienega / Jefferson → Culver City,,Culver City,476,50,4,5,True,2.0,34.027539,-118.383847,"https://www.google.com/maps?q=34.027539,-118.383847",24400,24450
+7,Expo Park / USC → Expo / Vermont,Exposition / Watt,Expo Park / USC,244,50,3,4,True,2.0,34.018259,-118.28838,"https://www.google.com/maps?q=34.018259,-118.28838",15500,15550
+8,Expo / Vermont → Expo / Western,Exposition / Halldale,Expo / Western,569,50,3,5,True,2.3,34.018304,-118.302742,"https://www.google.com/maps?q=34.018304,-118.302742",16825,16875
+9,La Cienega / Jefferson → Culver City,,La Cienega / Jefferson,477,25,4,5,True,1.7,34.026875,-118.377257,"https://www.google.com/maps?q=34.026875,-118.377257",23800,23825
+10,Expo / La Brea / Ethel Bradley → La Cienega / Jefferson,Jefferson / Hauser,La Cienega / Jefferson,498,25,3,4,True,1.8,34.025985,-118.366743,"https://www.google.com/maps?q=34.025985,-118.366743",22825,22850
+11,Expo / La Brea / Ethel Bradley → La Cienega / Jefferson,Jefferson / Cochran,Expo / La Brea / Ethel Bradley,702,25,3,5,True,1.8,34.025544,-118.362714,"https://www.google.com/maps?q=34.025544,-118.362714",22450,22475

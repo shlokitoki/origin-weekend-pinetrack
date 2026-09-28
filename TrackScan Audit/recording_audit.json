@@ -1,0 +1,357 @@
+[
+  {
+    "file": "3 2026-09-26 11-43-20.xlsx",
+    "recording_id": "R01",
+    "model": "iPhone18,3",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T11:25:58.676079988-07:00",
+    "start_epoch": 1790447158.67608,
+    "end_epoch": 1790448181.9993973,
+    "end_local": "2026-09-26T11:43:01.999397278-07:00",
+    "start_s_m": 24852.042687284906,
+    "end_s_m": 15293.490042999187,
+    "direction": "eastbound",
+    "hacc_median": 9.863690855533193,
+    "hacc_p90": 20.926853542677062,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790447158.67608,
+        "system time text": "2026-09-26 11:25:58.676 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1023.5416963333337,
+        "system time": 1790448182.253972,
+        "system time text": "2026-09-26 11:43:02.254 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "Track Scan 2026-09-26 09-51-58.xlsx",
+    "recording_id": "R02",
+    "model": "iPhone17,1",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T09:34:28.145833015-07:00",
+    "start_epoch": 1790440468.145833,
+    "end_epoch": 1790441466.506097,
+    "end_local": "2026-09-26T09:51:06.506097078-07:00",
+    "start_s_m": 15534.470539994181,
+    "end_s_m": 21790.97561188451,
+    "direction": "westbound",
+    "hacc_median": 15.2057171163989,
+    "hacc_p90": 20.834922934767754,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790440468.145833,
+        "system time text": "2026-09-26 09:34:28.146 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 692.9658594166685,
+        "system time": 1790441161.121108,
+        "system time text": "2026-09-26 09:46:01.121 UTC-07:00"
+      },
+      {
+        "event": "START",
+        "experiment time": 692.9658594166685,
+        "system time": 1790441466.494615,
+        "system time text": "2026-09-26 09:51:06.495 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 694.6790889583353,
+        "system time": 1790441468.207868,
+        "system time text": "2026-09-26 09:51:08.208 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "Track Scan 2026-09-26 10-49-47.xlsx",
+    "recording_id": "R03",
+    "model": "iPhone17,1",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T10:30:46.772712946-07:00",
+    "start_epoch": 1790443846.772713,
+    "end_epoch": 1790444956.0010755,
+    "end_local": "2026-09-26T10:49:16.001075506-07:00",
+    "start_s_m": 15321.996353759543,
+    "end_s_m": 24919.284062729454,
+    "direction": "westbound",
+    "hacc_median": 13.063238535173385,
+    "hacc_p90": 18.975489531836576,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790443846.772713,
+        "system time text": "2026-09-26 10:30:46.773 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1110.0105067499971,
+        "system time": 1790444956.798589,
+        "system time text": "2026-09-26 10:49:16.799 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "Track record arjan 2026-09-26 10-23-58.xlsx",
+    "recording_id": "R04",
+    "model": "iPhone17,4",
+    "version": "26.6.1",
+    "start_local": "2026-09-26T10:07:08.808650017-07:00",
+    "start_epoch": 1790442428.80865,
+    "end_epoch": 1790443367.0024793,
+    "end_local": "2026-09-26T10:22:47.002479315-07:00",
+    "start_s_m": 24919.06328578394,
+    "end_s_m": 15293.767776038669,
+    "direction": "eastbound",
+    "hacc_median": 10.13946981904132,
+    "hacc_p90": 47.46816237654128,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790442428.80865,
+        "system time text": "2026-09-26 10:07:08.809 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 938.8711397916777,
+        "system time": 1790443367.705896,
+        "system time text": "2026-09-26 10:22:47.706 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track2 2026-09-26 10-14-40.xlsx",
+    "recording_id": "R05",
+    "model": "iPhone17,1",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T09:58:16.881816864-07:00",
+    "start_epoch": 1790441896.8818169,
+    "end_epoch": 1790442855.0022643,
+    "end_local": "2026-09-26T10:14:15.002264261-07:00",
+    "start_s_m": 24899.839679803026,
+    "end_s_m": 15313.994949590371,
+    "direction": "eastbound",
+    "hacc_median": 10.196772804255891,
+    "hacc_p90": 19.971221367756776,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790441896.8818169,
+        "system time text": "2026-09-26 09:58:16.882 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 914.8997643750008,
+        "system time": 1790442811.799948,
+        "system time text": "2026-09-26 10:13:31.800 UTC-07:00"
+      },
+      {
+        "event": "START",
+        "experiment time": 914.8997643750008,
+        "system time": 1790442833.4149299,
+        "system time text": "2026-09-26 10:13:53.415 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 937.2857196250006,
+        "system time": 1790442855.801398,
+        "system time text": "2026-09-26 10:14:15.801 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track_brooke_1 2026-09-26 09-52-13.xlsx",
+    "recording_id": "R06",
+    "model": "iPhone18,3",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T09:34:25.302901030-07:00",
+    "start_epoch": 1790440465.302901,
+    "end_epoch": 1790441467.0030289,
+    "end_local": "2026-09-26T09:51:07.003028870-07:00",
+    "start_s_m": 15325.051132798857,
+    "end_s_m": 24864.487731444053,
+    "direction": "westbound",
+    "hacc_median": 7.283335383684772,
+    "hacc_p90": 18.58211877600053,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790440465.302901,
+        "system time text": "2026-09-26 09:34:25.303 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1002.3357625416647,
+        "system time": 1790441467.6774778,
+        "system time text": "2026-09-26 09:51:07.677 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track_brooke_2 2026-09-26 10-14-42.xlsx",
+    "recording_id": "R07",
+    "model": "iPhone18,3",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T09:58:13.199877024-07:00",
+    "start_epoch": 1790441893.199877,
+    "end_epoch": 1790442856.0018387,
+    "end_local": "2026-09-26T10:14:16.001838684-07:00",
+    "start_s_m": 24913.506968595746,
+    "end_s_m": 15309.06051550917,
+    "direction": "eastbound",
+    "hacc_median": 5.36652196729677,
+    "hacc_p90": 19.404341099205517,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790441893.199877,
+        "system time text": "2026-09-26 09:58:13.200 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 917.5923540416661,
+        "system time": 1790442810.8255339,
+        "system time text": "2026-09-26 10:13:30.826 UTC-07:00"
+      },
+      {
+        "event": "START",
+        "experiment time": 917.5923540416661,
+        "system time": 1790442834.330401,
+        "system time text": "2026-09-26 10:13:54.330 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 939.7300217500015,
+        "system time": 1790442856.4687371,
+        "system time text": "2026-09-26 10:14:16.469 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track_brooke_3 2026-09-26 10-49-40.xlsx",
+    "recording_id": "R08",
+    "model": "iPhone18,3",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T10:30:53.859046936-07:00",
+    "start_epoch": 1790443853.859047,
+    "end_epoch": 1790444955.00219,
+    "end_local": "2026-09-26T10:49:15.002190113-07:00",
+    "start_s_m": 15333.511078172747,
+    "end_s_m": 24916.08520130229,
+    "direction": "westbound",
+    "hacc_median": 7.4127946201384125,
+    "hacc_p90": 19.835420792341896,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790443853.859047,
+        "system time text": "2026-09-26 10:30:53.859 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1101.9837156249996,
+        "system time": 1790444955.878803,
+        "system time text": "2026-09-26 10:49:15.879 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track_suhela_1 2026-09-26 09-51-59.xlsx",
+    "recording_id": "R09",
+    "model": "iPhone17,1",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T09:34:24.255165099-07:00",
+    "start_epoch": 1790440464.255165,
+    "end_epoch": 1790441466.002133,
+    "end_local": "2026-09-26T09:51:06.002132893-07:00",
+    "start_s_m": 15322.185459594919,
+    "end_s_m": 24918.830896895597,
+    "direction": "westbound",
+    "hacc_median": 10.15877375652405,
+    "hacc_p90": 17.356555877806993,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790440464.255165,
+        "system time text": "2026-09-26 09:34:24.255 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1002.6588290416657,
+        "system time": 1790441466.936301,
+        "system time text": "2026-09-26 09:51:06.936 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track_suhela_3 2026-09-26 10-50-10.xlsx",
+    "recording_id": "R10",
+    "model": "iPhone17,1",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T10:30:49.763445854-07:00",
+    "start_epoch": 1790443849.7634459,
+    "end_epoch": 1790444956.0014782,
+    "end_local": "2026-09-26T10:49:16.001478195-07:00",
+    "start_s_m": 15331.471723664297,
+    "end_s_m": 24917.65950425084,
+    "direction": "westbound",
+    "hacc_median": 9.346069361076436,
+    "hacc_p90": 16.530301044092344,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790443849.7634459,
+        "system time text": "2026-09-26 10:30:49.763 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1106.9523038750012,
+        "system time": 1790444956.742028,
+        "system time text": "2026-09-26 10:49:16.742 UTC-07:00"
+      }
+    ]
+  },
+  {
+    "file": "track_suhela_4 2026-09-26 11-43-18.xlsx",
+    "recording_id": "R11",
+    "model": "iPhone17,1",
+    "version": "26.6.2",
+    "start_local": "2026-09-26T11:25:56.530940056-07:00",
+    "start_epoch": 1790447156.53094,
+    "end_epoch": 1790448182.0009203,
+    "end_local": "2026-09-26T11:43:02.000920296-07:00",
+    "start_s_m": 24820.671533297904,
+    "end_s_m": 15283.859178752453,
+    "direction": "eastbound",
+    "hacc_median": 9.803066511729671,
+    "hacc_p90": 43.596996562566346,
+    "events": [
+      {
+        "event": "START",
+        "experiment time": 0.0,
+        "system time": 1790447156.53094,
+        "system time text": "2026-09-26 11:25:56.531 UTC-07:00"
+      },
+      {
+        "event": "PAUSE",
+        "experiment time": 1025.6834982083383,
+        "system time": 1790448182.196337,
+        "system time text": "2026-09-26 11:43:02.196 UTC-07:00"
+      }
+    ]
+  }
+]

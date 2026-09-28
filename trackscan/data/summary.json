@@ -1,0 +1,100 @@
+{
+  "date": "2026-09-26",
+  "segment": "Expo Park/USC to Culver City (Metro E Line)",
+  "km_scanned": 9.7,
+  "rides": [
+    {
+      "pass_id": "WB-1",
+      "start_local": "09:34",
+      "direction": "westbound",
+      "recordings": 3,
+      "grouping": "inferred"
+    },
+    {
+      "pass_id": "EB-1",
+      "start_local": "09:58",
+      "direction": "eastbound",
+      "recordings": 2,
+      "grouping": "inferred"
+    },
+    {
+      "pass_id": "EB-2",
+      "start_local": "10:07",
+      "direction": "eastbound",
+      "recordings": 1,
+      "grouping": "inferred"
+    },
+    {
+      "pass_id": "WB-2",
+      "start_local": "10:30",
+      "direction": "westbound",
+      "recordings": 3,
+      "grouping": "inferred"
+    },
+    {
+      "pass_id": "EB-3",
+      "start_local": "11:25",
+      "direction": "eastbound",
+      "recordings": 2,
+      "grouping": "inferred"
+    }
+  ],
+  "recordings": 11,
+  "moving_seconds": 7174,
+  "cruise_seconds": 3519,
+  "phase_share": {
+    "cruise": 0.495,
+    "braking": 0.262,
+    "accelerating": 0.243
+  },
+  "speed_exponent": 1.017202252909744,
+  "hotspots_listed": 19,
+  "source": "R pipeline (trackscan_R.R), Sept 26 2026 run",
+  "physical_phones": 4,
+  "physical_phones_source": "User clarification on 2026-09-27",
+  "direction_summary": {
+    "westbound": {
+      "pass_groups": 2,
+      "recordings": 6,
+      "candidate_spots": 7,
+      "candidate_slices": 8,
+      "covered_slices": 300,
+      "all_covered_passes_spots": 7,
+      "from": "Expo Park/USC",
+      "to": "Culver City"
+    },
+    "eastbound": {
+      "pass_groups": 3,
+      "recordings": 5,
+      "candidate_spots": 12,
+      "candidate_slices": 17,
+      "covered_slices": 349,
+      "all_covered_passes_spots": 7,
+      "from": "Culver City",
+      "to": "Expo Park/USC"
+    }
+  },
+  "corridor_extent_m": {
+    "start": 15253.710091636103,
+    "end": 24922.971015080373
+  },
+  "corridor_extent_definition": "Along-reference span between minimum and maximum retained moving samples; not a sum of repeat travel distances.",
+  "grouping_sensitivity": {
+    "eastbound_separate_arjan_candidate_areas": 12,
+    "eastbound_merge_arjan_with_earlier_candidate_areas": 7,
+    "eastbound_exclude_arjan_candidate_areas": 7,
+    "status": "Sensitivity scenarios, not alternative observed truth. Normalized window scores retained; grouping and downstream thresholds recomputed."
+  },
+  "audit_status": "Recomputed by travel direction; pass identities inferred, physical tracks unverified",
+  "pending_confirmation": "Whether Arjan\u2019s 10:07 eastbound export was a separate train pass or has a clock offset; currently treated as a separate timestamp/GPS group.",
+  "method": {
+    "bin_m": 25,
+    "within_recording_bin": "median cruise-window score",
+    "within_pass_bin": "median across covering recordings",
+    "across_pass_bin": "median across covering passes of one direction",
+    "elevated_threshold": "top decile of each pass\u2019s covered bin scores",
+    "candidate_rule": "At least 2 covered passes, at least 2 elevated passes, elevated fraction >= 2/3, directional median score >= 1.5. Adjacent qualifying bins merge; counts refer to peak slice.",
+    "claim": "Places worth inspecting; not diagnoses of broken rails.",
+    "geometry": "Both directional views use the supplied GTFS corridor reference. No surveyed rail or track assignment is inferred."
+  }
+}

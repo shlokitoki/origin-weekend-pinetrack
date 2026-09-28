@@ -1,0 +1,63 @@
+You are an expert R programmer and signal-processing engineer. Write ONE complete, well-commented R script that I will run in RStudio on my Mac. Do not invent results: write the code, and make the script print the checks listed at the end so I can verify it.
+
+GOAL
+We recorded phone vibration on LA Metro E Line trains to find stretches of track that are consistently rough. Turn our recordings into (1) a ranked hotspot table and (2) a two-panel chart titled "The same spots shake on every train". The train brakes before every stop and accelerates after it, which creates jolts that are NOT track defects, so braking/accelerating time must be detected and removed before scoring.
+
+PACKAGES
+readxl, dplyr, tidyr, purrr, readr, stringr, zoo, signal, ggplot2, patchwork. Start with a line that installs any that are missing.
+IMPORTANT: the signal package masks dplyr::filter. Always write dplyr::filter() and signal::filtfilt()/signal::butter() explicitly.
+
+INPUT FILES
+Data folder: "~/Downloads/ORIGIN WEEKEND PRIMARY RESEARCH/" — use every *.xlsx file in it (ignore files starting with "~$" and all non-xlsx files). There are 11 phyphox exports. Each has these sheets:
+- "Accelerometer": columns "Time (s)", "X (m/s^2)", "Y (m/s^2)", "Z (m/s^2)" (~100 samples/s, includes gravity; phone lying roughly flat on the train floor, sometimes tilted)
+- "Location": "Time (s)", "Latitude (°)", "Longitude (°)", "Height (m)", "Velocity (m/s)", "Direction (°)", "Horizontal Accuracy (m)", "Vertical Accuracy (°)" (~1 fix/s; missing values are the text "NaN" -> convert with suppressWarnings(as.numeric()))
+- "Metadata Time": columns "event", "experiment time", "system time", "system time text". The row with event == "START" has "system time" = Unix epoch seconds when that recording started.
+Time (s) in Accelerometer and Location share the same clock (seconds since START).
+
+Reference files in "~/Downloads/ORIGIN WEEKEND PRIMARY RESEARCH/TrackScan Results/code/":
+- eline_shape.csv: seq, lat, lon — LA Metro's official E Line track centerline (745 points, ordered east -> west; distance along it increases westbound).
+- eline_stations.csv: name, lat, lon, chainage_m (distance along the line). Expo Park / USC is ~15,281 m and Culver City ~24,901 m.
+- stops_corridor.csv: stop_name, stop_lat, stop_lon — bus stop names near the line, used only to label cross streets.
+
+PROCESSING (per recording)
+1. Meters: x = lon * 111320 * cos(34.03 deg), y = lat * 110950.
+2. Resample the accelerometer to a uniform grid with step = median time step (approx()). fs = 1/step.
+3. Vertical vibration: gravity vector G = each axis low-passed with a 2nd-order Butterworth at 0.3 Hz, zero-phase (signal::filtfilt). vertical = (A · G) / |G| (works even if the phone is tilted). Then band-pass vertical at 1–30 Hz (4th-order Butterworth, zero-phase; normalize cutoffs by fs/2). Remove the mean before filtering.
+4. Split into 1-second windows. For each: window center time and RMS of the band-passed vertical signal.
+5. GPS: drop fixes with Horizontal Accuracy > 40 m. Linearly interpolate lat/lon to each window center. Drop windows whose nearest GPS fix is more than 4 s away.
+6. Snap to the track: project each window's point onto every segment of eline_shape (vectorized), keep the closest. chainage s = cumulative length up to that segment + fraction along it. Drop windows more than 60 m from the track.
+7. Speed: use "Velocity (m/s)" (interpolated) where it is >= 0; otherwise |Δs/Δt| smoothed with a centered 5-window rolling median.
+8. BRAKING / ACCELERATING DETECTION: smooth speed (fill gaps up to 5 windows, then centered 3-window rolling mean). long_acc = derivative of smoothed speed over time (m/s^2). "Stopped" = speed < 1 m/s. For each window compute seconds until the next stopped window and seconds since the last one. Phase:
+   - "braking" if long_acc < -0.3 OR within 10 s before a stop
+   - "accelerating" if long_acc > +0.3 OR within 10 s after a stop (braking wins if both)
+   - otherwise "cruise"
+9. Keep windows with speed >= 3 m/s. Record direction per recording (sign of the slope of s vs time: increasing = westbound).
+
+ACROSS RECORDINGS
+10. Rides: sort recordings by START epoch; a new ride starts when the gap to the previous START is > 180 s. Label rides "Ride k · HH:MM · WB/EB" in America/Los_Angeles time.
+11. Print the phase share of all moving windows, then keep ONLY cruise windows for everything below.
+12. Speed adjustment: fit lm(log(rms) ~ log(speed)) on all cruise windows pooled; slope b clipped to [0, 2]. adj = rms / speed^b.
+13. Per-recording normalization: score = adj / median(adj of that recording) (so 1 = a typical stretch for that phone).
+14. 25 m bins: bin = floor(s/25). For each recording × bin take the max score. A recording's bin is "hot" if that value >= the recording's 90th percentile of window scores.
+15. Per bin: recordings covering it, median score across recordings, hot fraction. Hotspot bins: covered by >= ceiling(0.5 × number of recordings) recordings, hot fraction >= 0.5, median score >= 1.5. Merge adjacent hotspot bins into segments, then merge segments whose gap is <= 75 m into zones.
+16. Per zone: severity = max median bin score; rides_rough = rides where ANY phone was hot in ANY bin of the zone; rides_covering; both_directions (rough on at least one WB and one EB ride); nearest station and distance to it (by chainage); "between Station A → Station B"; cross street = nearest bus stop name within 150 m (else NA); station_zone flag if within 150 m of a station; Google Maps link https://www.google.com/maps?q=LAT,LON at the zone's peak. Keep zones with rides_rough >= 3. Rank by severity × (rides_rough / rides_covering) × (1.25 if both directions).
+17. Chance test: using only bins covered by all rides (cruise data), take each ride's hot/not-hot sequence, circularly shift it by a random offset (set.seed(0)), 2000 times; count bins hot on ALL rides each time. Report observed count vs mean and max of the shuffles.
+
+OUTPUTS (write into ".../TrackScan Results/R_output/")
+- hotspots_R.csv (ranked zones with all fields above)
+- recordings_summary_R.csv: file, ride, direction, start time, duration (min), km covered, moving seconds, % cruise / braking / accelerating, median cruise speed (km/h), GPS fixes
+- chart_R.png, 13 × 7.2 in, 160 dpi, background #fcfcfb:
+  Top panel (x = chainage in km, y = "Shake vs. a typical stretch (×)", y from 0): each ride's median score per bin as thin gray (#c3c2b7) lines; median across all recordings as a 1 mm blue line (#2a78d6); light horizontal reference line at 1; light red (#d03b3b, alpha 0.08) bands over the top 5 zones with a red dot at each peak and a label like "#1  3.4×\n5/5 rides" (use ggrepel or manual offsets so labels don't overlap).
+  Bottom panel (shares the x axis): one row per ride; a light gray bar over the stretch that ride covered; a dark dot wherever that ride was hot. Note under it: "Dots = that ride's roughest 10% of track. Columns of dots = the same spot, felt on every train."
+  X axis tick labels = station names (only stations between Expo Park / USC and Culver City), rotated 30°.
+  Title: "The same spots shake on every train". Subtitle: "Vertical vibration along the Metro E Line, Expo Park/USC → Culver City · 11 recordings on 5 trains, Sept 26 · speed-adjusted · braking & accelerating removed". Caption: one line describing the method.
+  Minimal theme, no top/right axis lines, light gridlines.
+
+CHECKS TO PRINT (our Python version of this exact method produced these; small differences are fine, big ones mean a bug)
+- 11 recordings, 5 rides: Ride 1 09:34 WB (3 phones), Ride 2 09:58 EB (2), Ride 3 10:07 EB (1), Ride 4 10:30 WB (3), Ride 5 11:25 EB (2). Most recordings cover ~9.6 km (one ~6.1 km).
+- ~7,170 moving 1-s windows; phase split ≈ 49% cruise / 27% braking / 24% accelerating; median long_acc while braking ≈ -0.7 m/s^2.
+- Speed exponent b ≈ 1.0.
+- Top zones: #1 ≈ 16,100–16,250 m near "Exposition / Budlong" (~400 m west of Expo / Vermont), severity ≈ 3.4×, rough on 5/5 rides, both directions. #2 ≈ 17,200–17,225 m near "Exposition / Harvard" (~200 m east of Expo / Western), ≈ 2.9×, 3/3 rides. #3 ≈ 17,875–17,900 m (~470 m west of Expo / Western), ≈ 2.2×, 4/4 rides.
+- Chance test: 2 bins rough on all 5 rides vs ~0.05 expected by chance.
+
+After the code, give a short plain-English explanation of each step that I can say out loud to judges.

@@ -1,0 +1,67 @@
+You are a senior front-end engineer and product designer. Build a 3D web page for our startup demo, TrackScan. I have attached (1) a screenshot of a page we built for another product ("screwge — Locate the work. Follow the proof."): copy its layout, spacing and visual language closely, and (2) six data files with our REAL measured results. Do not invent data; everything shown must come from the files. This first version is ONLY the 3D map experience. Leave clean placeholders for charts and photos; we will add those in a later message.
+
+WHAT TRACKSCAN IS
+Phones lying on the floor of LA Metro E Line trains record vibration + GPS. We rode 5 trains (11 phones) between Expo Park/USC and Culver City, removed braking/accelerating seconds, and found stretches of track that shake hard on every ride. The page lets an inspector see the line in 3D, find each rough spot, and see the evidence for it.
+
+TECH (keep it simple and reliable)
+- One index.html with inline CSS and JS, plus a data/ folder holding my files. No build step, no API keys. It must run on Replit (static site) and locally via `python3 -m http.server`.
+- MapLibre GL JS v4 from a CDN (unpkg or jsdelivr).
+- Base map style: OpenFreeMap positron, https://tiles.openfreemap.org/styles/positron (vector source "openmaptiles").
+- Aerial imagery: raster source with tiles https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}, tileSize 256, maxzoom 16 (let MapLibre overzoom), inserted below the building and label layers. On by default, toggled by an "Aerial detail" button.
+- 3D buildings: fill-extrusion layer from source "openmaptiles", source-layer "building", height ["get","render_height"], base ["get","render_min_height"], color #ece9e2, opacity 0.9, minzoom 14. "Buildings on/off" toggle.
+- Attribution, bottom-right: "© OpenStreetMap contributors · OpenFreeMap © OpenMapTiles · USDA, USGS The National Map: Orthoimagery".
+
+DATA FILES (put in data/)
+- eline_route.geojson: two LineStrings. id "full_line" = whole E Line (draw as a thin dashed gray line); id "scanned" = the 9.6 km we measured (draw as a 3 px dark line under the ribbon).
+- track_ribbon.geojson: 369 polygons, each an 8 m-wide, 25 m-long slice of the track, with properties median_score (1 = typical track; higher = rougher; range ~0.5–3.4), hot_fraction, recordings, rides_rough, rides_covering, start_m, end_m.
+- track_roughness.geojson: the same 25 m slices as LineStrings (use for hover tooltips if easier).
+- hotspots.geojson (from our R pipeline): for each hotspot, one Point (id "H-01"…, rank, severity, rides_rough, rides_covering, both_directions, between, cross_street (may be null), nearest_station, dist_to_station_m, start_m, end_m, length_m, google_maps, label, status) and one LineString with id "H-01-zone" etc. marking its extent.
+- stations.geojson: Points with name, chainage_m, in_scanned_segment.
+- summary.json: headline numbers (km_scanned, rides, recordings, moving_seconds, cruise_seconds, phase_share, chance_test, rides[]).
+
+THE 3D "SHAKE RIBBON" (the hero visual)
+- Draw track_ribbon.geojson as a fill-extrusion standing on the track, so the vibration profile literally rises out of the ground: height = 1 m for median_score <= 1, otherwise 1 + 8 × (median_score − 1) metres, capped at 22 m.
+- Color on ONE hue, light to dark: <= 1.2 → #d8d4cc (neutral), 1.5 → #efb3ac, 2.0 → #e07a72, 2.5 → #c9463f, >= 3.0 → #8e1f1f (interpolate). Opacity 0.95.
+- Hover a slice → small tooltip: "25 m slice · 2.4× typical shake · rough on 4/5 rides".
+- Hotspot zones (the "-zone" LineStrings): a 5 px line in #8e1f1f on top, with a soft glow (second, wider line at low opacity).
+
+HOTSPOT PINS (like the C-01/C-02 cards in the screenshot)
+- For every hotspot Point, an HTML marker card: colored dot + "H-01" bold + "3.4×" muted, white card, subtle shadow, a thin leader line down to the track. Dot color: red #d03b3b if rough on every ride that covered it (rides_rough == rides_covering), otherwise amber #c98500.
+- Clicking a pin (or its chip in the right panel, or the Location dropdown) selects it: fly the camera to it (zoom 17, pitch 65, bearing that looks along the track), outline its card, and fill the right panel.
+
+LAYOUT (mirror the screenshot)
+- Header: wordmark "trackscan" with a red dot, then the small monospace kicker "TRACK HEALTH · METRO E LINE". H1: "Locate the rough track. Follow the proof." Subline: "Expo Park/USC → Culver City · 5 rides · 11 phones · Sept 26, 2026". Close (×) button at top right, decorative.
+- Four-step funnel row (numbers from summary.json and hotspots.geojson):
+  01 Scanned "9.6 km" · 02 Compared "5 rides" (small: "11 phones") · 03 Rough on every ride "N spots" (N = hotspots where rides_rough == rides_covering and rides_covering >= 3; with our data N = 3; this step is active, with a red underline) · 04 Inspected "—" (pending).
+- Map area (left, about 74% of the width):
+  - Top-left floating card: "Location" dropdown listing hotspots as "H-01 · near Exposition / Budlong" (use nearest_station when cross_street is null).
+  - Under it, a segmented control: "Shake" (default: ribbon and pins), "Evidence" (photo pins; empty for now), "Inspections" (pins colored by status; all "Needs inspection" for now).
+  - Top-right of map: "Aerial detail" toggle and +/−/recenter buttons, styled like the screenshot.
+  - Bottom-left: view chips "3D" / "Plan" (Plan = pitch 0, north up).
+  - Bottom-left card (disclaimer, like the screenshot): bold line "3 spots rough on every ride · 6 more on most rides" (compute both numbers from the data, same rule as the funnel), small gray line: "Ribbon height and color show relative vertical shake measured by phones on the train floor, speed-adjusted, braking removed. Hotspots are leads for inspection, not confirmed defects."
+- Right panel (about 26%):
+  - Chips row for the top 3 hotspots (dot + id + "3.4×").
+  - Kicker "H-01 / TRACK ROUGHNESS", title "Near Exposition / Budlong", status pill "Needs inspection" (amber).
+  - Tabs: Overview / Evidence / Checks.
+    Overview: big number "3.4×" + "shake vs. a typical stretch"; a sentence built from the data, e.g. "This 150 m stretch was among the roughest 10% of track on 5 of 5 rides, in both directions. It sits 409 m from Expo / Vermont, between Expo / Vermont and Expo / Western."; two stat columns "Rides rough: 5 / 5" and "Both directions: Yes"; "Where: 16.10–16.25 km along the line"; buttons "Open in Google Maps" (google_maps field) and "Street View" (https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=LAT,LON).
+    Evidence: "Track photos" grid (from data/photos.json, empty state "Photos coming soon"), and an empty "Vibration trace" card with id="trace-slot" (charts come later).
+    Checks: a checklist the inspector can tick (stored in memory only): "Street crossing here?", "Switch / crossover here?", "Rail joint visible?", "Visible defect?", "Needs geometry car run?".
+- Bottom control bar (like the screenshot): Orbit/Move toggle, rotate left/right, "N" (reset bearing), Tilt slider 0–80° (default 65°), "Buildings on", and a primary button "Ride the line ▶".
+
+"RIDE THE LINE" (for our 30–60 s demo video)
+Animate the camera along the "scanned" line from Expo Park/USC to Culver City over ~45 s: pitch 70, bearing following the track direction, zoom ~17, with a small train marker moving along it. As the train passes each hotspot, slow down for about 1.5 s, pop that hotspot's card, and show a toast "H-01 · 3.4× typical shake · rough on 5/5 rides". Pause/stop button. Use requestAnimationFrame plus turf-style interpolation along the line (write the helper yourself or load @turf/turf from a CDN).
+
+PHOTOS (support now, fill later)
+Load data/photos.json if it exists: [{ "file": "photos/IMG_1234.jpg", "caption": "...", "lat": 34.0183, "lon": -118.2961, "hotspot_id": "H-01" }]. lat/lon/hotspot_id are optional. If lat/lon are missing, read GPS from the JPEG's EXIF with exifr (CDN). In "Evidence" mode show camera pins; clicking opens a lightbox. A photo appears under a hotspot's Evidence tab only if hotspot_id matches or it lies within 75 m of that hotspot.
+
+LATER SECTION PLACEHOLDER
+Under the map, add an empty full-width section with id="analysis" and heading "How we measured it", containing a one-line placeholder. We will add charts and calculations in a later message.
+
+START STATE
+Camera over H-01 at zoom 16.3, pitch 65°, bearing looking west along Exposition Blvd, aerial on, buildings on, H-01 selected.
+
+DESIGN
+White/near-white surfaces (#ffffff, #fcfcfb), ink #0b0b0b, secondary #52514e, hairlines #e1e0d9, accent red #d03b3b, amber #c98500. Inter or system sans; small caps labels in a monospace font. Rounded 12 px cards, soft shadows, generous whitespace, like the screenshot. Desktop-first (1440×900); at < 900 px the right panel stacks below the map.
+
+QUALITY BAR
+No console errors. If the imagery tiles fail, fall back to the vector map silently. Every number on screen must come from the data files. When done, list the files to create, then give the complete code.
