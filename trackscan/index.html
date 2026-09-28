@@ -128,6 +128,7 @@ header{background:white;padding-top:23px}
 .zone-badge.probable{border-color:#fab219}
 .spot-link{border:0;background:none;padding:0;min-height:0;color:var(--ink);font:inherit;text-decoration:underline;text-underline-offset:2px;cursor:pointer}.spot-link:hover{background:none;color:var(--red)}
 .findings-note{font-size:12px!important;color:#77756e!important}
+.findings-list{margin:10px 0 0;padding-left:18px;max-width:1050px;font-size:13px;line-height:1.65;color:#5a5f57}.findings-list li{margin-top:8px}.findings-list strong{color:var(--ink)}
 .finding-figure{margin:28px 0 0;max-width:1100px}.figure-title{font-size:16px;font-weight:620;letter-spacing:-.3px;margin:0 0 10px}
 #analysis .demo-note{margin:12px 0 14px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:#f5f4f0;color:#4f4d47;max-width:1050px;line-height:1.6}#analysis .demo-note strong{color:var(--ink)}
 .finding-figure a{display:block}
@@ -257,6 +258,21 @@ header{background:white;padding-top:23px}
    <figcaption>Vertical vibration by frequency and train speed, from the same sensor on two trains. The dashed line is how often a wheel turns at each speed. On the 10:30 westbound train the vibration follows that line, and its double, at every speed: a wheel was shaking the car wherever it went, so this is a wheel problem, not a track problem. The 11:25 train shows no such band. Wheel-locked vibration turned up on 2 of the 6 trains. It is removed before zones are scored, and it is a separate lead for the vehicle maintenance team.</figcaption>
   </figure>
   <p class="findings-note">Figures: 13 sensor recordings on the LA Metro E Line, 26 Sep 2026; LA Metro GTFS track geometry. This is one morning of data, with only 2 westbound trains and no E Line ground truth yet, so every zone is an inspection candidate. The code, outputs and all 16 figures are in the <a href="https://github.com/shlokitoki/origin-weekend-pinetrack/tree/main/Pinetrack%20Zone%20Analysis" target="_blank" rel="noopener">Pinetrack Zone Analysis folder</a>.</p>
+ </section>
+ <section id="beijing" class="findings" aria-labelledby="beijing-title">
+  <h2 id="beijing-title">Learning from real defects: the Beijing Subway dataset</h2>
+  <p>Our E Line recordings have no answers attached yet: no inspection report tells us what is actually at each spot. The one dataset in this project that does is a public Beijing Subway set of car-body vibration recordings matched to inspection reports that mark where real track defects were (<a href="https://github.com/Elscip/scidata_jrrt_1" target="_blank" rel="noopener">Wang et al., CC-BY</a>). We used it in a supporting role: to test our assumptions and to add one input to each zone’s evidence rating. It never decides a zone on its own.</p>
+  <h3>How it helped</h3>
+  <ul class="findings-list">
+   <li><strong>It showed the approach can work.</strong> A model trained on Beijing’s labeled recordings, using only the signals our sensor records, told defects apart from normal track with an AUC of 0.95, where 1.0 is perfect and 0.5 is guessing. At a 5% false-alarm rate it caught 97% of severe defects and 80% of all defects, so the dangerous problems stand out most.</li>
+   <li><strong>It adds a defect-likeness score.</strong> The model scored every 20 m of the E Line by how closely the vibration resembles Beijing’s confirmed defects. That score is 30% of each zone’s evidence rating; the other 70% comes from trains agreeing with each other.</li>
+   <li><strong>It lifted zone 4.</strong> About 400 m west of Expo/Vermont, zone 4 has the strongest model score of any zone, 86%. On repeat trains alone it is only probable, because just 2 of 4 trains agree so far. The model is why it ranks third on the repair list, ahead of confirmed zone 3.</li>
+   <li><strong>It cross-checked the confirmed zones.</strong> Without any tuning to E Line data, the model put confirmed zones 1 and 2 in the top 1.5% of the line and zone 3 in the top 7%. Two different methods pointing at the same places is stronger than either alone. Its single highest score, 87%, is on the westbound track about 470 m west of Expo/Western, where the map flags WB-06; only one train covered that stretch, so the repeat-train test could not check it yet.</li>
+   <li><strong>It backed two design choices.</strong> Vertical shaking was the strongest defect signal in Beijing (vertical alone: AUC 0.90), so the analysis leans on vertical vibration. And Beijing’s defects tended to show up at lower train speeds, so an uncorrected model could “find” defects just by noticing a slow train. That is why every stretch is compared only with stretches at a similar speed.</li>
+  </ul>
+  <p><strong>What it can’t do.</strong> It can’t tell what is actually at any E Line spot: different trains, sensors and track mean its scores rank spots rather than give real odds. And it isn’t fully independent of the repeat-train test, since both use related vibration measures, so it is strong corroboration, not proof.</p>
+  <h3>Next: training on LA Metro’s own data</h3>
+  <p>Beijing is a head start, not the answer. Once Pinetrack sensors ride LA Metro trains every day and Metro shares its track inspection and repair records, every alert will end with a real answer: the inspector’s “issue found” or “nothing found”, and Metro’s record of what was fixed. Those answers become E Line labels. We will retrain the model on them, so its scores come from the E Line’s own track instead of a comparison with Beijing, and tune the alert rule to flag problems earlier with fewer false alarms. More passes sharpen the repeat-train test too: with a stable baseline, we project that about 10 passes will confirm a new 0.6 m/s² jolt.</p>
  </section>
 </main>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
