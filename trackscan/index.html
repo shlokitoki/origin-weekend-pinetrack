@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TrackScan — Find places worth inspecting. Follow the evidence.</title>
 <meta name="description" content="Explore measured track vibration on LA Metro's E Line. A 3D map of direction-specific places worth inspecting. Phone vibration is not a diagnosis of broken rails.">
+<!-- server.js switches this on when it can email alerts; static hosting leaves it off. -->
+<meta name="trackscan-email" content="off">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23fcfcfb'/%3E%3Cpath d='M7 23V9m8 14V5m8 18V12' stroke='%23d03b3b' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
 <style>
@@ -43,8 +45,51 @@ header{background:white;padding-top:23px}
 
 .grouping-alert{margin-top:10px;padding:9px;border-radius:6px;background:#faf3e4;color:#72551a;font-size:11px;line-height:1.5}
 
-/* Evidence is the phone recordings only; the Alert tab is a notice for the track inspection authorities. */
+/* Evidence is the phone recordings only. */
 .evidence-note{font-size:12px;line-height:1.55;color:#6f6c64;margin:-4px 0 12px}
+
+/* How TrackScan works: six steps from sensor to alert, and the alert levels. */
+.how{display:grid;grid-template-columns:minmax(0,1fr) 290px;grid-template-areas:"head levels" "steps levels" "detail levels";column-gap:26px;padding:14px 36px 16px;border-bottom:1px solid var(--line)}
+.how-head{grid-area:head;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:10px}.how-steps{grid-area:steps}.how-detail{grid-area:detail}.levels{grid-area:levels}
+.how-head h2{font:12px/1.5 var(--mono);letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:400}
+.how-head p{font-size:12px;color:#77756e}
+.how-steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+.how-step{position:relative;display:flex;align-items:center;gap:9px;min-height:54px;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:white;font-size:12px;font-weight:600;line-height:1.3;transition:border-color .35s,background-color .35s,box-shadow .35s}
+.how-step:not(:last-child):after{content:"→";position:absolute;right:-16px;top:50%;transform:translateY(-50%);color:#a19e95;font-size:13px;font-weight:400}
+.how-step.active{border-color:#e3b4ac;background:#fff8f6;box-shadow:0 2px 12px #d03b3b14}
+.how-icon{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#f1f0ec;color:#45443f;flex:none;transition:background-color .35s,color .35s}
+.how-step.active .how-icon{background:var(--red);color:white}
+.how-num{display:block;font:10px/1.3 var(--mono);color:#8a877f;font-weight:400}
+.how-more{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.how-detail{margin-top:10px;font-size:12px;line-height:1.5;color:#4f4d47;min-height:36px;max-width:980px}
+.how-detail strong{font-weight:620;color:var(--ink)}
+.how-icon.pulse{animation:how-pulse 1.3s ease-out}
+@keyframes how-pulse{0%{box-shadow:0 0 0 0 #d03b3b90}100%{box-shadow:0 0 0 14px #d03b3b00}}
+.levels{border:1px solid var(--line);border-radius:10px;padding:10px 12px;align-self:start}
+.levels h3{font:10px/1.4 var(--mono);letter-spacing:1.1px;text-transform:uppercase;color:#7a776f;font-weight:400;margin-bottom:7px}
+.levels ul{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.levels li{display:grid;grid-template-columns:9px 1fr;gap:8px;font-size:11px;line-height:1.45;color:#5e5c55}
+.levels li strong{color:var(--ink);font-weight:620;margin-right:5px}
+.lvl{width:9px;height:9px;border-radius:50%;margin-top:3px}
+.lvl-watch{background:#a3a097}.lvl-inspect{background:var(--red)}.lvl-urgent{border:1.5px dashed #8e1f1f}
+.soon{font-style:normal;font-size:10px;color:#6b6860;background:#f1f0ec;border-radius:4px;padding:1px 5px;white-space:nowrap}
+
+/* Alerts tab: automatic alerts from the tour, newest first, each opening the full alert. */
+.tab-count{display:inline-grid;place-items:center;min-width:17px;height:17px;padding:0 5px;border-radius:9px;background:var(--red);color:white;font-size:10px;font-weight:600;vertical-align:1px}
+.alerts-intro{font-size:12px;line-height:1.55;color:#5e5c55;margin-bottom:12px}
+.alert-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.alert-row{width:100%;text-align:left;display:grid;gap:3px;padding:10px 11px;border-radius:9px;border:1px solid var(--line);background:white}
+.alert-row:hover{background:#fbfaf8}
+.alert-row.new{animation:row-in .5s ease-out}
+@keyframes row-in{from{opacity:0;transform:translateY(-6px);background:#fff1ed}to{opacity:1;transform:none;background:white}}
+.alert-row-top{display:flex;align-items:center;gap:7px;font-size:12px}.alert-row-top .pill{margin-left:auto}
+.alert-when{font:11px var(--mono);color:#7a776f}
+.alert-row-place{font-size:13px;font-weight:600}
+.alert-row-meta{font-size:11px;color:#77746c}
+.pill{display:inline-flex;align-items:center;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px;background:#fbefec;color:#a52d2d;white-space:nowrap}
+.pill.found{background:#a52d2d;color:white}.pill.clear{background:#e8f1ea;color:#2f6b3f}
+.alert-state{margin:13px 0 0 6px;vertical-align:top;line-height:1.7}
+.back-link{border:0;background:none;padding:0;min-height:0;font-size:12px;color:var(--muted);margin-bottom:10px}.back-link:hover{background:none;color:var(--ink)}
 .alert-card{border:1px solid #e8c1ba;border-radius:10px;overflow:hidden;background:white}
 .alert-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;background:#fbefec;border-bottom:1px solid #f1d7d1;color:#a52d2d;font:11px/1.4 var(--mono);letter-spacing:1.1px;text-transform:uppercase}
 .alert-flag{display:flex;align-items:center;gap:7px;font-weight:600}.alert-flag svg{flex:none}
@@ -53,17 +98,25 @@ header{background:white;padding-top:23px}
 .alert-body>p{font-size:12px;line-height:1.55;color:#5e5c55;margin-top:6px}
 .alert-facts{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;margin:12px 0 0;padding:11px 0;border-top:1px solid #eeede8;border-bottom:1px solid #eeede8;font-size:12px}
 .alert-facts dt{color:#7a776f}.alert-facts dd{margin:0;overflow-wrap:anywhere}.alert-facts a{color:inherit}
-.alert-body h4,.send-to h4{font:10px/1.4 var(--mono);letter-spacing:1.1px;text-transform:uppercase;color:#7a776f;margin:12px 0 8px}
+.alert-body h4{font:10px/1.4 var(--mono);letter-spacing:1.1px;text-transform:uppercase;color:#7a776f;margin:12px 0 8px}
+.alert-evidence{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:12px}
+.alert-evidence span{color:#5e5c55}.alert-evidence small{display:block;color:#7a776f;font-size:11px;line-height:1.5;overflow-wrap:anywhere;margin-top:2px}
 .alert-checks{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:12px}
 .alert-checks li{display:flex;gap:9px;align-items:center}
 .alert-checks li:before{content:"";width:11px;height:11px;border:1.5px solid #a3a097;border-radius:2px;flex:none}
-.send-to{margin-top:6px}.send-to dl{display:grid;grid-template-columns:auto 1fr;gap:10px 12px;margin:0;font-size:12px;line-height:1.5}
-.send-to dt{font:10px/1.9 var(--mono);letter-spacing:1px;text-transform:uppercase;color:#7a776f}.send-to dd{margin:0;overflow-wrap:anywhere}
-.send-to dd strong{font-weight:600}.send-to dd span{color:#76736c}.send-to a{color:inherit}
-.alert-actions{display:flex;gap:8px;margin-top:14px}
-.alert-actions a,.alert-actions button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;min-height:38px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;padding:8px 10px;white-space:nowrap}
-.alert-actions a{background:var(--red);border:1px solid var(--red);color:white}.alert-actions a:hover{background:#b83232}
-@media(max-width:899px){.alert-body>p,.alert-facts,.alert-checks,.send-to dl{font-size:14px}.alert-actions a,.alert-actions button{font-size:14px}}
+.alert-actions{display:grid;gap:8px;margin-top:14px}
+.alert-actions button{min-height:38px;font-size:12px;font-weight:600}.alert-actions button[aria-pressed=true]{border-color:var(--ink);background:#f1f0ed}
+
+/* An automatic alert slides in over the map. */
+.toast.toast-alert{display:flex;gap:9px;align-items:flex-start;white-space:normal;width:max-content;max-width:min(560px,calc(100% - 36px));background:white;color:var(--ink);border:1px solid #e8c1ba;border-left:4px solid var(--red);line-height:1.45;animation:toast-in .35s ease-out}
+.toast.toast-alert svg{flex:none;color:var(--red);margin-top:1px}
+@keyframes toast-in{from{opacity:0;transform:translate(-50%,-12px)}to{opacity:1;transform:translate(-50%,0)}}
+
+@media(max-width:1279px){.how{grid-template-columns:minmax(0,1fr) 330px;grid-template-areas:"head head" "steps steps" "detail levels"}.levels{margin-top:10px}}
+@media(max-width:1100px){.how{padding-left:24px;padding-right:24px}}
+@media(max-width:899px){.alert-body>p,.alert-facts,.alert-checks,.alert-evidence{font-size:14px}.alert-actions button{font-size:14px}.how-steps{grid-template-columns:repeat(3,minmax(0,1fr))}.how-step:nth-child(3):after{display:none}.how{grid-template-columns:minmax(0,1fr);grid-template-areas:"head" "steps" "detail" "levels"}.levels ul{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+@media(max-width:540px){.how{padding:14px 16px}.how-steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.how-step:after{display:none}.levels ul{grid-template-columns:1fr}.how-detail{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.toast.toast-alert,.alert-row.new,.how-icon.pulse{animation:none}.how-step,.how-icon{transition:none}}
 </style>
 </head>
 <body>
@@ -77,6 +130,26 @@ header{background:white;padding-top:23px}
  </div>
 </header>
 <main>
+ <section class="how" id="how" aria-labelledby="how-title">
+   <div class="how-head"><h2 id="how-title">How TrackScan works</h2><p>From a shake on the train to an alert for the track team, with no one watching a screen.</p></div>
+   <ol class="how-steps">
+    <li class="how-step" data-step="1"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2.5-6 4 12 3-9 2 3H21"/></svg></span><span class="how-text"><span class="how-num">01</span>Sensor on the train floor</span><span class="how-more">Records vibration 100 times a second plus GPS on every trip. Today, phones stand in for our sensor.</span></li>
+    <li class="how-step" data-step="2"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20v-3m4 3v-6m4 6V11"/><path d="M18 14V4m-3.5 3.5L18 4l3.5 3.5"/></svg></span><span class="how-text"><span class="how-num">02</span>Uploads after each run</span><span class="how-more">Uploads over cellular after each run, automatically. Today, the phone exports were uploaded by hand.</span></li>
+    <li class="how-step" data-step="3"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16l-6 7.5V18l-4 2v-7.5z"/></svg></span><span class="how-text"><span class="how-num">03</span>Cleans the signal</span><span class="how-more">Removes gravity, drops braking and accelerating, and adjusts for speed.</span></li>
+    <li class="how-step" data-step="4"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.4-6-10a6 6 0 0 1 12 0c0 4.6-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg></span><span class="how-text"><span class="how-num">04</span>Pins it to the track map</span><span class="how-more">Pins each second to the official track map and compares it with earlier passes in the same direction.</span></li>
+    <li class="how-step" data-step="5"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h10M10 12h10M10 18h10"/><path d="m3.5 6 1.5 1.5L7.5 5M3.5 12l1.5 1.5 2.5-2.5M3.5 18l1.5 1.5 2.5-2.5"/></svg></span><span class="how-text"><span class="how-num">05</span>Checks the rule</span><span class="how-more" id="how-rule">Flags a 25 m slice when it is at least 1.5× typical and elevated (top 10% for that pass) on at least 2 passes, at least 2/3 of the passes covering it. This is the exact rule behind the spots on the map.</span></li>
+    <li class="how-step" data-step="6"><span class="how-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg></span><span class="how-text"><span class="how-num">06</span>Alerts track maintenance</span><span class="how-more">Sends an automatic alert to the agency’s track maintenance team (email, SMS or work order) with location, evidence and suggested checks. An inspector confirms or dismisses it, and that feedback is saved. In this demo, alerts go to our team inbox.</span></li>
+   </ol>
+   <p class="how-detail" id="how-detail" aria-hidden="true"></p>
+  <aside class="levels" aria-labelledby="levels-title">
+   <h3 id="levels-title">Alert levels</h3>
+   <ul>
+    <li><span class="lvl lvl-watch" aria-hidden="true"></span><span><strong>Watch</strong>Elevated on 1 pass. Logged, no alert.</span></li>
+    <li><span class="lvl lvl-inspect" aria-hidden="true"></span><span><strong>Inspect</strong>Meets the rule in step 5. Alert sent.</span></li>
+    <li><span class="lvl lvl-urgent" aria-hidden="true"></span><span><strong>Urgent</strong><em class="soon">Coming with continuous monitoring</em> Fires when a spot gets sharply worse week over week, so it needs trend history.</span></li>
+   </ul>
+  </aside>
+ </section>
  <section class="workspace" aria-label="Track inspection map">
   <div class="workspace-main">
    <div class="map-wrap">
@@ -98,24 +171,33 @@ header{background:white;padding-top:23px}
    <aside class="panel" aria-label="Selected hotspot">
     <div class="hotspot-chips" id="hotspot-chips"></div>
     <div class="kicker" id="hotspot-kicker">Track roughness</div><h2 id="hotspot-title">Loading evidence…</h2>
-    <div class="status"><span class="dot"></span><span id="hotspot-status">Worth inspecting</span></div><p class="grouping-alert" id="grouping-alert" hidden></p>
-    <div class="tabs" role="tablist" aria-label="Hotspot details"><button id="tab-overview" role="tab" aria-selected="true" aria-controls="overview" data-tab="overview">Overview</button><button id="tab-evidence" role="tab" aria-selected="false" aria-controls="evidence" tabindex="-1" data-tab="evidence">Evidence</button><button id="tab-alert" role="tab" aria-selected="false" aria-controls="alert" tabindex="-1" data-tab="alert">Alert</button></div>
+    <div class="status"><span class="dot"></span><span id="hotspot-status">Worth inspecting</span></div><span class="pill alert-state" id="hotspot-alert" hidden></span><p class="grouping-alert" id="grouping-alert" hidden></p>
+    <div class="tabs" role="tablist" aria-label="Hotspot details"><button id="tab-overview" role="tab" aria-selected="true" aria-controls="overview" data-tab="overview">Overview</button><button id="tab-evidence" role="tab" aria-selected="false" aria-controls="evidence" tabindex="-1" data-tab="evidence">Evidence</button><button id="tab-alerts" role="tab" aria-selected="false" aria-controls="alerts" tabindex="-1" data-tab="alerts">Alerts <span class="tab-count" id="alerts-count" hidden></span></button></div>
     <div class="tab-content" id="overview" role="tabpanel" aria-labelledby="tab-overview"><div class="big-score" id="severity">—</div><div class="score-caption">relative shake in this direction</div><p class="description" id="description"></p><dl class="stats"><div><dt>Pass groups elevated</dt><dd id="rides-rough">—</dd></div><div><dt>Travel direction</dt><dd id="directions">—</dd></div></dl><p class="where" id="where"></p><div class="external-links"><a id="google-maps" target="_blank" rel="noopener">Open in Google Maps ↗</a><a id="street-view" target="_blank" rel="noopener">Street View ↗</a></div></div>
     <div class="tab-content" id="evidence" role="tabpanel" aria-labelledby="tab-evidence" hidden><h3>Phone recordings at this slice</h3><p class="evidence-note">All evidence comes from these phone recordings (phyphox Excel exports). Phones on the same train count as one pass.</p><div id="pass-evidence"></div><div class="trace-card"><h3>Vibration trace</h3><div id="trace-slot" class="empty-card">Vibration charts coming soon</div></div></div>
-    <div class="tab-content" id="alert" role="tabpanel" aria-labelledby="tab-alert" hidden>
-     <article class="alert-card" aria-labelledby="alert-title">
-      <div class="alert-head"><span class="alert-flag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20z"/><path d="M12 10v5m0 3v.01"/></svg>Inspection alert</span><span id="alert-id"></span></div>
-      <div class="alert-body">
-       <h3 id="alert-title"></h3>
-       <p id="alert-summary"></p>
-       <dl class="alert-facts"><dt>Line</dt><dd id="alert-line"></dd><dt>Where</dt><dd id="alert-where"></dd><dt>Map</dt><dd><a id="alert-map" target="_blank" rel="noopener"></a></dd><dt>Recorded</dt><dd id="alert-recorded"></dd></dl>
-       <h4>Suggested checks</h4>
-       <ul class="alert-checks" id="alert-checks"></ul>
-      </div>
-     </article>
-     <div class="send-to"><h4>Send to</h4><dl><dt>To</dt><dd><strong>LA Metro</strong> <span>· runs and maintains the E Line track</span><br><a href="mailto:CustomerRelations@metro.net">CustomerRelations@metro.net</a> · <a href="tel:+18889507233">888.950.7233</a> (24 h)</dd><dt>Cc</dt><dd><strong>CPUC</strong> <span>· state rail safety oversight</span><br><a href="mailto:consumer-affairs@cpuc.ca.gov">consumer-affairs@cpuc.ca.gov</a></dd></dl></div>
-     <div class="alert-actions"><a id="alert-email">Email this alert</a><button id="alert-copy" type="button">Copy alert text</button></div>
-     <p class="small-note">Email opens your mail app with the alert filled in. This is a screening lead from phone sensors, not a confirmed defect. For immediate danger, call 911.</p>
+    <div class="tab-content" id="alerts" role="tabpanel" aria-labelledby="tab-alerts" hidden>
+     <div id="alerts-list-view">
+      <p class="alerts-intro">Sent automatically when a spot meets the Inspect rule. Recipient: <strong id="alerts-recipient"></strong> (configured by the agency).</p>
+      <div class="empty-card" id="alerts-empty">No alerts yet. Press <strong>Ride the line</strong>: TrackScan checks each spot as the train passes and sends alerts on its own.</div>
+      <ol class="alert-list" id="alert-list"></ol>
+     </div>
+     <div id="alert-detail" hidden>
+      <button type="button" class="back-link" id="alert-back">← All alerts</button>
+      <article class="alert-card" aria-labelledby="alert-title">
+       <div class="alert-head"><span class="alert-flag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 2 21h20z"/><path d="M12 10v5m0 3v.01"/></svg>Inspection alert</span><span id="alert-id"></span></div>
+       <div class="alert-body">
+        <h3 id="alert-title"></h3>
+        <p id="alert-what"></p>
+        <dl class="alert-facts"><dt>Where</dt><dd id="alert-where"></dd><dt>Direction</dt><dd id="alert-route"></dd><dt>Lat/lon</dt><dd><span id="alert-latlon"></span> · <a id="alert-map" target="_blank" rel="noopener">Map ↗</a></dd><dt>Recorded</dt><dd id="alert-recorded"></dd><dt>Sent</dt><dd id="alert-sent"></dd><dt>Status</dt><dd id="alert-status"></dd></dl>
+        <h4>Evidence</h4>
+        <ul class="alert-evidence" id="alert-evidence"></ul>
+        <h4>Suggested checks</h4>
+        <ul class="alert-checks" id="alert-checks"></ul>
+       </div>
+      </article>
+      <div class="alert-actions"><button type="button" id="mark-found" aria-pressed="false">Mark inspected: issue found</button><button type="button" id="mark-clear" aria-pressed="false">Mark inspected: nothing found</button></div>
+      <p class="small-note">A place worth inspecting, not a diagnosis. In this demo, the inspector’s answer is kept on this page only.</p>
+     </div>
     </div>
    </aside>
   </div>
@@ -129,6 +211,7 @@ header{background:white;padding-top:23px}
 <details class="method-details"><summary>Review the recordings and calculation method</summary><p id="audit-method"></p><p id="grouping-note"></p><div class="audit-table-wrap"><table id="recording-table"><thead><tr><th>Recording</th><th>Direction</th><th>Pass group</th><th>Start time</th></tr></thead><tbody></tbody></table></div><p>Sources: <a href="https://docs.cpuc.ca.gov/PUBLISHED/FINAL_DECISION/106853.htm" target="_blank" rel="noopener">CPUC: double-track Expo corridor</a> · <a href="https://gtfs.org/resources/gtfs-schedule-feature-guides/shapes/" target="_blank" rel="noopener">GTFS route geometry guidance</a> · <a href="https://www.gps.gov/gps-accuracy-0" target="_blank" rel="noopener">GPS.gov: phone positioning limits</a></p><p>Vibration charts will be added separately.</p></details></section>
 </main>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="alert-rules.js"></script>
 <script>
 'use strict';
 const $=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
@@ -137,10 +220,12 @@ const score=n=>Number(n).toFixed(1)+'×';
 const allRides=p=>p.rides_rough===p.rides_covering&&p.rides_covering>=2;
 const dotColor=p=>p.rides_rough===p.rides_covering?'#d03b3b':'#c98500';
 let direction='westbound',allHotspots=[],recordingAudit=[];
-let map, ready=false, selected, hotspots=[], datasets={}, markers=new Map(), tab='overview', aerial=true, buildings=true, surveyDate='';
-// LA Metro runs and maintains the track; the CPUC is its state safety oversight agency and takes public rail safety reports.
-const alertRecipients={to:'CustomerRelations@metro.net',cc:'consumer-affairs@cpuc.ca.gov'};
-const alertChecks=['Street crossing at this spot','Switch or crossover','Rail joint condition','Visible rail or fastener defects','Track geometry (geometry car run)'];
+let map, ready=false, selected, hotspots=[], datasets={}, markers=new Map(), tab='overview', aerial=true, buildings=true, surveyDate='', alertRule;
+// Alerts go to E Line Track Maintenance (configured by the agency). The demo inbox address is set once, as
+// DEMO_ALERT_EMAIL in server.js; the page never sees it. server.js turns this flag on when it can send email.
+const EMAIL_ON=document.querySelector('meta[name="trackscan-email"]')?.content==='on';
+const alertLog=new Map(); // One alert, and so at most one email, per spot per page load.
+let openAlertId=null;
 let orbitGesture=null;
 function initOrbit(){const canvas=map.getCanvas();canvas.addEventListener('pointerdown',e=>{if($('orbit').getAttribute('aria-pressed')!=='true'||e.button!==0)return;pauseRide();map.stop();orbitGesture={id:e.pointerId,x:e.clientX,y:e.clientY,bearing:map.getBearing(),pitch:map.getPitch()};canvas.setPointerCapture(e.pointerId);canvas.style.cursor='grabbing';});canvas.addEventListener('pointermove',e=>{if(!orbitGesture||e.pointerId!==orbitGesture.id)return;map.jumpTo({bearing:orbitGesture.bearing-(e.clientX-orbitGesture.x)*.3,pitch:Math.max(0,Math.min(80,orbitGesture.pitch+(e.clientY-orbitGesture.y)*.2))});});function end(e){if(!orbitGesture||e.pointerId!==orbitGesture.id)return;orbitGesture=null;canvas.style.cursor='grab';if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);}canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);}
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -164,7 +249,7 @@ function selectHotspot(id,{fly=true,initial=false}={}){
  $('google-maps').href=p.google_maps;$('street-view').href=`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${f.geometry.coordinates[1]},${f.geometry.coordinates[0]}`;
  for(const [key,m] of markers){m.getElement().classList.toggle('selected',key===id);m.getElement().querySelector('.pin').setAttribute('aria-pressed',String(key===id));}
  $$('[data-hotspot]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.hotspot===id)));
- renderAlert();renderPassEvidence();
+ syncAlertView();renderPassEvidence();
  if(fly&&ready)map.flyTo({center:f.geometry.coordinates,zoom:initial?16.3:17,pitch:65,bearing:routeBearing(projectAlong(f.geometry.coordinates)),duration:reducedMotion?0:1300});
 }
 function renderPassEvidence(){
@@ -198,27 +283,64 @@ function applyDirectionFilters(){
  for(const id of ['hotspot-glow','hotspot-zones'])map.setFilter(id,['all',['==',['geometry-type'],'LineString'],['==',['get','direction'],direction]]);
 }
 $('direction').onchange=e=>setDirection(e.target.value);
-function alertFacts(){const p=selected.properties,[lon,lat]=selected.geometry.coordinates;return {p,place:p.cross_street||p.nearest_station,coords:`${lat.toFixed(5)}, ${lon.toFixed(5)}`,route:direction==='westbound'?'westbound (USC → Culver City)':'eastbound (Culver City → USC)',recordings:p.pass_evidence.filter(e=>e.covered).reduce((n,e)=>n+e.recordings.length,0),provisional:direction==='eastbound'};}
-function alertMessage(){
- const {p,place,coords,route,recordings,provisional}=alertFacts();
- return {subject:`Track inspection request: Metro E Line ${direction} near ${place} (${p.id})`,body:['Hello,','','TrackScan, a phone-based vibration survey of the Metro E Line, flagged a location that may be worth a track inspection.','',`Alert ID: ${p.id}`,`Line: Metro E Line, ${route}`,`Location: near ${place}, about ${p.dist_to_station_m} m from ${p.nearest_station} station`,`Coordinates: ${coords} (approximate)`,`Map: ${p.google_maps}`,`Measured: vibration ${score(p.severity)} the usual level for this direction, elevated on ${p.rides_rough} of ${p.rides_covering} passes${provisional?' (pass grouping provisional)':''}`,`Recorded: ${surveyDate}, ${recordings} phone recordings`,`Suggested checks: ${alertChecks.join('; ')}`,'','This is a screening lead from phone sensors, not a confirmed defect. Phone GPS cannot identify which track or rail was affected.','',`Evidence and method: ${location.origin}${location.pathname}`,'','Thank you.'].join('\n')};
+// ---- Automatic alerts: the tour checks each spot against the rule as the train passes it. ----
+const clock=d=>d.toLocaleTimeString([],{hour:'numeric',minute:'2-digit',second:'2-digit'});
+const statusLabel={sent:'Sent',found:'Issue found',clear:'Nothing found'};
+const deliveryLabel={sending:'sending the email…',email:'emailed to the demo inbox',screen:'shown on screen (demo)'};
+const bellIcon='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>';
+function checkSpot(f){
+ const p=f.properties,level=TrackScanAlerts.level(p,alertRule),earlier=alertLog.get(p.id);
+ if(level!=='inspect'){toast(`${p.id} · ${score(p.severity)} relative shake · ${level==='watch'?'Watch: logged, no alert':'below the alert rule'}`);return;}
+ if(earlier){toast(`${p.id} · ${score(p.severity)} · alert already sent at ${clock(earlier.sentAt)}`);return;}
+ const alert={id:p.id,direction:p.direction,info:TrackScanAlerts.describe(f,datasets['summary.json'],recordingAudit),sentAt:new Date(),status:'sent',delivery:EMAIL_ON?'sending':'screen'};
+ alertLog.set(p.id,alert);
+ toastAlert(alert.info);pulseAlertStep();renderAlertList(p.id);showAlertState();
+ if(EMAIL_ON)emailAlert(alert);
 }
-function renderAlert(){
- if(!selected)return;const {p,place,coords,route,recordings,provisional}=alertFacts(),{subject,body}=alertMessage();
- $('alert-id').textContent=p.id;$('alert-title').textContent='Possible track issue near '+place;
- $('alert-summary').textContent=`Phone sensors recorded vibration ${score(p.severity)} the usual level here on ${p.rides_rough} of ${p.rides_covering} ${direction} passes. Worth a check by the track inspection team.${provisional?' Pass grouping in this direction is provisional.':''}`;
- $('alert-line').textContent='Metro E Line · '+route;
- $('alert-where').textContent=`Near ${place}, about ${p.dist_to_station_m} m from ${p.nearest_station} station (approximate)`;
- $('alert-map').textContent=coords+' ↗';$('alert-map').href=p.google_maps;
- $('alert-recorded').textContent=`${surveyDate} · ${recordings} phone recordings on ${p.rides_covering} passes`;
- $('alert-email').href=`mailto:${alertRecipients.to}?cc=${alertRecipients.cc}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body.replace(/\n/g,'\r\n'))}`;
- $('alert-copy').textContent='Copy alert text';
+// Without a working email server the alert simply stays on screen; the viewer never sees an error.
+async function emailAlert(alert){
+ try{const r=await fetch('api/alert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:alert.id}),signal:AbortSignal.timeout(10000)});alert.delivery=r.ok&&(await r.json()).sent?'email':'screen';}
+ catch{alert.delivery='screen';}
+ if(openAlertId===alert.id)renderAlertDetail();
 }
-$('alert-checks').replaceChildren(...alertChecks.map(text=>Object.assign(document.createElement('li'),{textContent:text})));
-// Some browsers and embedded views refuse the async Clipboard API; fall back to a selected textarea.
-async function copyText(text){try{await navigator.clipboard.writeText(text);return true;}catch{const area=document.createElement('textarea');area.value=text;area.readOnly=true;area.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.append(area);area.select();let ok=false;try{ok=document.execCommand('copy');}catch{}area.remove();return ok;}}
-$('alert-copy').onclick=async()=>{if(!selected)return;const {subject,body}=alertMessage();$('alert-copy').textContent=await copyText(`To: ${alertRecipients.to}\nCc: ${alertRecipients.cc}\nSubject: ${subject}\n\n${body}`)?'Copied ✓':'Copy failed';};
-function setTab(name){tab=name;$$('[data-tab]').forEach(b=>{const active=b.dataset.tab===name;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});['overview','evidence','alert'].forEach(id=>$(id).hidden=id!==name);}
+function toastAlert(d){clearTimeout(toastTimer);const t=$('toast');t.className='toast';void t.offsetWidth;t.className='toast toast-alert';t.innerHTML=`${bellIcon}<span><strong>Alert sent automatically</strong> · ${escapeHTML(d.id)} · ${escapeHTML(d.severity)} · ${escapeHTML(d.title)} · to ${escapeHTML(TrackScanAlerts.RECIPIENT)}</span>`;t.hidden=false;toastTimer=setTimeout(()=>t.hidden=true,2800);}
+function renderAlertList(newId){
+ const items=[...alertLog.values()].sort((a,b)=>b.sentAt-a.sentAt);
+ $('alerts-empty').hidden=items.length>0;$('alerts-count').hidden=!items.length;$('alerts-count').textContent=items.length;
+ $('alert-list').replaceChildren(...items.map(a=>{const li=document.createElement('li'),row=document.createElement('button');row.type='button';row.className='alert-row'+(a.id===newId?' new':'');row.innerHTML=`<span class="alert-row-top"><span class="alert-when">${escapeHTML(clock(a.sentAt))}</span><strong>${escapeHTML(a.id)}</strong><span>${escapeHTML(a.info.severity)}</span><span class="pill ${a.status}">${statusLabel[a.status]}</span></span><span class="alert-row-place">${escapeHTML(a.info.title)}</span><span class="alert-row-meta">Delivered to: ${escapeHTML(TrackScanAlerts.RECIPIENT)} (demo inbox)</span>`;row.onclick=()=>openAlert(a.id);li.append(row);return li;}));
+}
+function openAlert(id){
+ const a=alertLog.get(id);if(!a)return;
+ pauseRide();openAlertId=null;
+ if(a.direction!==direction)setDirection(a.direction,{fly:false});
+ openAlertId=id;if(selected?.properties.id!==id)selectHotspot(id);
+ renderAlertDetail();$('alerts-list-view').hidden=true;$('alert-detail').hidden=false;setTab('alerts');
+}
+function showAlertList(){openAlertId=null;$('alert-detail').hidden=true;$('alerts-list-view').hidden=false;}
+function renderAlertDetail(){
+ const a=alertLog.get(openAlertId);if(!a)return;const d=a.info;
+ $('alert-id').textContent=d.id;$('alert-title').textContent='Possible track issue near '+d.place;
+ $('alert-what').textContent=d.what+(d.provisional?' Pass grouping in this direction is provisional.':'');
+ $('alert-where').textContent=d.where;$('alert-route').textContent=d.route;$('alert-latlon').textContent=d.latlon;$('alert-map').href=d.mapUrl;$('alert-recorded').textContent=d.recorded;
+ $('alert-sent').textContent=`${clock(a.sentAt)}, automatically, to ${TrackScanAlerts.RECIPIENT} (demo inbox): ${deliveryLabel[a.delivery]}`;
+ $('alert-status').textContent=a.status==='sent'?'Awaiting inspection':'Inspected: '+(a.status==='found'?'issue found':'nothing found');
+ $('alert-evidence').replaceChildren(...d.passes.map(x=>{const li=document.createElement('li');li.innerHTML=`<strong>${escapeHTML(x.id)}${x.start?' · '+escapeHTML(x.start):''}</strong> <span>${escapeHTML(x.result)}</span><small>${x.files.map(escapeHTML).join('<br>')}</small>`;return li;}));
+ $('alert-checks').replaceChildren(...d.checks.map(text=>Object.assign(document.createElement('li'),{textContent:text})));
+ $('mark-found').setAttribute('aria-pressed',String(a.status==='found'));$('mark-clear').setAttribute('aria-pressed',String(a.status==='clear'));
+}
+function markAlert(status){const a=alertLog.get(openAlertId);if(!a)return;a.status=status;renderAlertDetail();renderAlertList();showAlertState();}
+$('mark-found').onclick=()=>markAlert('found');$('mark-clear').onclick=()=>markAlert('clear');$('alert-back').onclick=showAlertList;
+function showAlertState(){const a=selected&&alertLog.get(selected.properties.id),el=$('hotspot-alert');el.hidden=!a;if(!a)return;el.className='pill alert-state '+a.status;el.textContent=a.status==='sent'?'Alert sent '+clock(a.sentAt):'Inspected: '+(a.status==='found'?'issue found':'nothing found');}
+// Keep the Alerts tab on the selected spot's alert if it has one, otherwise on the list.
+function syncAlertView(){showAlertState();if(!openAlertId||openAlertId===selected.properties.id)return;if(alertLog.has(selected.properties.id)){openAlertId=selected.properties.id;renderAlertDetail();}else showAlertList();}
+// The strip highlights one step at a time; hovering holds a step, and every alert jumps to step 6.
+const howSteps=$$('.how-step');let howIndex=0,howHoldUntil=0;
+function setHowStep(i,hold=0){howIndex=i;if(hold)howHoldUntil=Date.now()+hold;howSteps.forEach((el,j)=>el.classList.toggle('active',j===i));const el=howSteps[i];$('how-detail').innerHTML=`<strong>${escapeHTML(el.querySelector('.how-text').lastChild.textContent)}.</strong> ${escapeHTML(el.querySelector('.how-more').textContent)}`;}
+function pulseAlertStep(){const icon=howSteps[5].querySelector('.how-icon');setHowStep(5,4000);icon.classList.remove('pulse');void icon.offsetWidth;icon.classList.add('pulse');}
+howSteps.forEach((el,i)=>el.addEventListener('mouseenter',()=>setHowStep(i,6000)));
+setHowStep(0);
+if(!reducedMotion)setInterval(()=>{if(Date.now()>=howHoldUntil&&!document.hidden)setHowStep((howIndex+1)%howSteps.length);},4500);
+function setTab(name){tab=name;$$('[data-tab]').forEach(b=>{const active=b.dataset.tab===name;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});['overview','evidence','alerts'].forEach(id=>$(id).hidden=id!==name);}
 $$('[data-tab]').forEach((b,i)=>{b.onclick=()=>setTab(b.dataset.tab);b.onkeydown=e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const buttons=$$('[data-tab]'),j=e.key==='Home'?0:e.key==='End'?buttons.length-1:(i+(e.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;buttons[j].focus();setTab(buttons[j].dataset.tab);};});
 $('location').onchange=e=>{stopRide();selectHotspot(e.target.value);};
 function mapAction(fn){return ()=>{if(!ready)return;pauseRide();fn();};}
@@ -235,7 +357,9 @@ async function init(){
   const names=['summary.json','eline_route.geojson','track_ribbon.geojson','track_roughness.geojson','hotspots.geojson','stations.geojson','recordings.json'];
   const values=await Promise.all(names.map(getData));names.forEach((name,i)=>datasets[name]=values[i]);
   recordingAudit=datasets['recordings.json'];allHotspots=datasets['hotspots.geojson'].features.filter(f=>f.geometry.type==='Point');
-  const s=datasets['summary.json'];surveyDate=new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(new Date(s.date+'T12:00:00'));
+  const s=datasets['summary.json'];surveyDate=TrackScanAlerts.surveyDate(s);alertRule=TrackScanAlerts.rule(s);
+  $('how-rule').textContent=`Flags a ${alertRule.binM} m slice when it is at least ${alertRule.minScore}× typical and elevated (top 10% for that pass) on at least ${alertRule.minElevated} passes, at least ${alertRule.fraction.join('/')} of the passes covering it. This is the exact rule behind the spots on the map.`;
+  setHowStep(howIndex);$('alerts-recipient').textContent=TrackScanAlerts.RECIPIENT;
   $('subtitle').textContent=`Expo Park/USC ↔ Culver City · ${s.physical_phones} phones · ${s.recordings} recordings · ${surveyDate}`;
   $('km').textContent=s.km_scanned+' km';
   $('audit-method').textContent=`Recorded with ${s.physical_phones} physical phones (confirmed by the team), producing ${s.recordings} exports. Median vibration is calculated within each recording and ${s.method.bin_m} m slice, then across phones within a pass, then across covered passes in the selected direction. Elevated means in the top decile of that pass’s covered slice scores. Candidate rule: ${s.method.candidate_rule} The counts shown for an area refer to its peak slice. Each pass has equal weight; phones are not independent rides.`;
@@ -276,13 +400,16 @@ function addMarkers(){
 // The remaining distance shares the rest of the 45-second tour; no recorded speed is implied.
 let ride={active:false,paused:false,elapsed:0,last:0,frame:0,train:null,seen:new Set(),segments:[],duration:45000,bearing:0};
 let toastTimer;
-function toast(text){clearTimeout(toastTimer);$('toast').textContent=text;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,1800);}
+function toast(text){clearTimeout(toastTimer);$('toast').className='toast';$('toast').textContent=text;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,1800);}
 function buildRideTimeline(){const stops=hotspots.map(f=>({f,d:projectAlong(f.geometry.coordinates)})).sort((a,b)=>a.d-b.d);const windows=stops.map((s,i)=>({...s,start:Math.max(0,s.d-18,i?(s.d+stops[i-1].d)/2:0),end:Math.min(route.total,s.d+18,i<stops.length-1?(s.d+stops[i+1].d)/2:route.total)}));const slowMeters=windows.reduce((n,s)=>n+s.end-s.start,0),normalMs=ride.duration-windows.length*1500;let position=0,time=0;ride.segments=[];function add(start,end,ms,hotspot){if(end<=start)return;ride.segments.push({start,end,t0:time,t1:time+ms,hotspot});time+=ms;}for(const w of windows){add(position,w.start,(w.start-position)/(route.total-slowMeters)*normalMs);add(w.start,w.end,1500,w.f);position=w.end;}add(position,route.total,(route.total-position)/(route.total-slowMeters)*normalMs);}
 function initRide(){buildRideTimeline();$('ride').onclick=()=>{if(!ride.active)startRide();else if(ride.paused)resumeRide();else pauseRide();};$('stop-ride').onclick=()=>stopRide();map.on('dragstart',pauseRide);map.on('zoomstart',e=>{if(e.originalEvent)pauseRide();});map.getCanvas().addEventListener('pointerdown',pauseRide);document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseRide();});}
-function startRide(){if(!ready)return;stopRide();ride.active=true;ride.paused=false;ride.elapsed=0;ride.seen.clear();ride.bearing=routeBearing(0);map.stop();const el=document.createElement('div');el.className='train';el.setAttribute('aria-label','Demo train position');el.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="3" width="12" height="15" rx="3"/><path d="M6 11h12M9 18l-2 3m8-3 2 3M9 15h.1M15 15h.1"/></svg>';ride.train=new maplibregl.Marker({element:el}).setLngLat(along(0)).addTo(map);$('ride').textContent='Pause ride Ⅱ';$('stop-ride').hidden=false;$('ride-progress').hidden=false;$('ride-progress').firstElementChild.style.width='0%';map.jumpTo({center:along(0),zoom:17,pitch:70,bearing:ride.bearing});ride.last=performance.now();ride.frame=requestAnimationFrame(tickRide);}
+// Keep the strip, map and controls in view on desktop so the automatic alerts can be seen as they fire.
+// When everything cannot fit, keep the steps row (step 6 pulses on each alert) and the controls on screen.
+function revealTour(){if(!matchMedia('(min-width: 900px)').matches)return;const top=$('how').getBoundingClientRect().top,steps=document.querySelector('.how-steps').getBoundingClientRect().top,bottom=document.querySelector('.control-bar').getBoundingClientRect().bottom;const by=bottom-top<=innerHeight?top:Math.min(steps,bottom-innerHeight);if(Math.abs(by)>1)window.scrollBy({top:by,behavior:reducedMotion?'auto':'smooth'});}
+function startRide(){if(!ready)return;stopRide();setTab('alerts');showAlertList();revealTour();ride.active=true;ride.paused=false;ride.elapsed=0;ride.seen.clear();ride.bearing=routeBearing(0);map.stop();const el=document.createElement('div');el.className='train';el.setAttribute('aria-label','Demo train position');el.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="6" y="3" width="12" height="15" rx="3"/><path d="M6 11h12M9 18l-2 3m8-3 2 3M9 15h.1M15 15h.1"/></svg>';ride.train=new maplibregl.Marker({element:el}).setLngLat(along(0)).addTo(map);$('ride').textContent='Pause ride Ⅱ';$('stop-ride').hidden=false;$('ride-progress').hidden=false;$('ride-progress').firstElementChild.style.width='0%';map.jumpTo({center:along(0),zoom:17,pitch:70,bearing:ride.bearing});ride.last=performance.now();ride.frame=requestAnimationFrame(tickRide);}
 function tickRide(now){if(!ride.active||ride.paused)return;const dt=now-ride.last;ride.last=now;ride.elapsed=Math.min(ride.duration,ride.elapsed+dt);const s=ride.segments.find(s=>ride.elapsed<=s.t1)||ride.segments.at(-1),fraction=Math.max(0,Math.min(1,(ride.elapsed-s.t0)/(s.t1-s.t0))),d=s.start+(s.end-s.start)*fraction;const center=along(d);const target=routeBearing(d),delta=((target-ride.bearing+540)%360)-180;ride.bearing+=delta*(1-Math.exp(-dt/240));ride.train.setLngLat(center);map.jumpTo({center,zoom:17,pitch:70,bearing:ride.bearing});$('ride-progress').firstElementChild.style.width=(ride.elapsed/ride.duration*100)+'%';// Account for a slow frame that skips the beginning of a hotspot window.
-for(const segment of ride.segments){if(segment.hotspot&&segment.t0<=ride.elapsed&&!ride.seen.has(segment.hotspot.properties.id)){const p=segment.hotspot.properties;ride.seen.add(p.id);selectHotspot(p.id,{fly:false});const el=markers.get(p.id)?.getElement();if(el){el.classList.remove('visiting');void el.offsetWidth;el.classList.add('visiting');}toast(`${p.id} · ${score(p.severity)} relative shake · elevated on ${p.rides_rough}/${p.rides_covering} ${direction} pass groups`);}}
-if(ride.elapsed>=ride.duration){stopRide();toast('End of '+direction+' corridor tour');return;}ride.frame=requestAnimationFrame(tickRide);}
+for(const segment of ride.segments){if(segment.hotspot&&segment.t0<=ride.elapsed&&!ride.seen.has(segment.hotspot.properties.id)){const p=segment.hotspot.properties;ride.seen.add(p.id);selectHotspot(p.id,{fly:false});const el=markers.get(p.id)?.getElement();if(el){el.classList.remove('visiting');void el.offsetWidth;el.classList.add('visiting');}checkSpot(segment.hotspot);}}
+if(ride.elapsed>=ride.duration){stopRide();toast(`End of ${direction} corridor tour · ${[...alertLog.values()].filter(a=>a.direction===direction).length} alerts sent`);return;}ride.frame=requestAnimationFrame(tickRide);}
 function pauseRide(){if(!ride.active||ride.paused)return;ride.paused=true;cancelAnimationFrame(ride.frame);$('ride').textContent='Resume ride ▶';}
 function resumeRide(){if(!ride.active||!ride.paused)return;map.stop();ride.paused=false;ride.last=performance.now();$('ride').textContent='Pause ride Ⅱ';ride.frame=requestAnimationFrame(tickRide);}
 function stopRide(){if(!ride.active)return;cancelAnimationFrame(ride.frame);ride.train?.remove();ride.train=null;ride.active=false;ride.paused=false;ride.elapsed=0;$('ride').textContent='Ride the line ▶';$('stop-ride').hidden=true;$('ride-progress').hidden=true;clearTimeout(toastTimer);$('toast').hidden=true;}

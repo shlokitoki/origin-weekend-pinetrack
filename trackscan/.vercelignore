@@ -1,0 +1,6 @@
+# Vercel serves this folder as a static site. The Node email server is for Replit or local runs.
+server.js
+package.json
+package-lock.json
+.replit
+node_modules

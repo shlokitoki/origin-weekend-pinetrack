@@ -2,13 +2,46 @@
 
 This is an inspection-screening map. It does not diagnose broken rails or confirm defects. Westbound and eastbound evidence is now analyzed separately.
 
-## Run
+## Run locally
+
+Static, with alerts on screen only (the same as the Vercel site):
 
 ```sh
 python3 -m http.server 8765
 ```
 
-Open http://localhost:8765. Upload the same contents to a static Replit project; no build or API keys are required. Internet is required for MapLibre, map tiles, and optional EXIF support.
+Open http://localhost:8765. Internet is required for MapLibre and the map tiles.
+
+With the email server (Node 20 or newer):
+
+```sh
+npm install
+npm start
+```
+
+Open http://localhost:3000. Without SMTP settings the server runs with email off and prints which settings are missing. To email alerts, set these environment variables:
+
+| Variable | Meaning |
+|---|---|
+| `SMTP_HOST` | SMTP server, for example `smtp.gmail.com` |
+| `SMTP_PORT` | Optional, default `587`; use `465` for implicit TLS |
+| `SMTP_USER`, `SMTP_PASS` | SMTP login; for Gmail, an app password |
+| `SMTP_FROM` | Optional sender, for example `TrackScan <you@example.com>` |
+| `DEMO_ALERT_EMAIL` | The team inbox. You can instead edit the `DEMO_ALERT_EMAIL` constant at the top of `server.js` |
+
+## Run on Replit
+
+1. Create a Node.js Repl and upload this folder's contents: `index.html`, `alert-rules.js`, `server.js`, `package.json`, `package-lock.json`, `.replit` and `data/`. Leave out `node_modules`, `.vercel` and `.env.local`.
+2. In Secrets, add `SMTP_HOST`, `SMTP_USER` and `SMTP_PASS`, plus `SMTP_PORT`, `SMTP_FROM` and `DEMO_ALERT_EMAIL` as needed. A `DEMO_ALERT_EMAIL` secret keeps the inbox address out of the code.
+3. Press Run. `.replit` installs the dependencies and starts `server.js` on port 3000, published on port 80. The console says whether alert emails are on.
+
+## Automatic alerts
+
+During Ride the line, each spot the train reaches is checked against the rule in `alert-rules.js`, which reads its thresholds from `data/summary.json`. A spot at the Inspect level fires one alert per page load: a toast over the map, a row in the Alerts tab, and a pulse on step 6 of the How TrackScan works strip. The recipient is always E Line Track Maintenance, configured by the agency; in the demo it is the team inbox.
+
+With the email server, the page posts only the spot ID to `/api/alert`. The server rebuilds the alert from its own copy of the data files and emails `DEMO_ALERT_EMAIL`; the browser never chooses the recipient or the content. The server sends at most one email per spot every 30 seconds and 60 per hour (`ALERT_MAX_PER_HOUR`). When email is off or fails, the alert stays on screen and the viewer sees no error. The inspector buttons (issue found / nothing found) update the status on the page only.
+
+Vercel serves this folder as a static site; `.vercelignore` leaves the server files out, so alerts there are on screen only.
 
 ## Data and corrections
 
@@ -32,7 +65,7 @@ Both directions use the supplied GTFS corridor reference geometry. No fabricated
 
 ## Page controls
 
-Travel direction changes the ribbon, candidate list, evidence, and tour direction together. Location and map cards select a candidate. The Evidence tab lists covering pass groups and their source recordings; the phone recordings are the only evidence. The Alert tab turns the selected candidate into an inspection alert addressed to LA Metro (which runs and maintains the track), copying the CPUC (state rail safety oversight). Visitors can open it as a pre-filled email or copy the text.
+Travel direction changes the ribbon, candidate list, evidence, and tour direction together. Location and map cards select a candidate. The Evidence tab lists covering pass groups and their source recordings; the phone recordings are the only evidence. The Alerts tab lists the alerts sent during this page load; a row opens the full alert with its location, evidence, suggested checks and inspector buttons.
 
 Orbit rotates/tilts, Move pans, Plan is north-up. The 45-second tour follows the selected direction and slows around its candidates. Pause, resume, and stop are supported. Changing direction stops playback.
 

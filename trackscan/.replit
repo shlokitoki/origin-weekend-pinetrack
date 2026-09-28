@@ -1,0 +1,12 @@
+entrypoint = "server.js"
+modules = ["nodejs-20"]
+run = "npm install --no-audit --no-fund && npm start"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[deployment]
+build = ["npm", "install", "--no-audit", "--no-fund"]
+run = ["npm", "start"]
+deploymentTarget = "cloudrun"

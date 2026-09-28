@@ -11,7 +11,7 @@ Four phones rode the LA Metro E Line between Expo Park/USC and Culver City and r
 | `*.xlsx` | 11 raw phyphox exports (Accelerometer, Location and Metadata sheets) from 26 Sep 2026 |
 | `TrackScan Results/` | Original analysis: `code/` (Python + R pipeline, E Line GTFS geometry), charts, hotspot CSVs, `web_data/`. The audit supersedes its headline results. |
 | `TrackScan Audit/` | 27 Sep re-analysis that separates westbound and eastbound evidence, with scripts and intermediate CSVs |
-| `trackscan/` | Static map website (MapLibre) built from the audited data |
+| `trackscan/` | Map website (MapLibre) built from the audited data, with automatic inspection alerts and an optional Node server that emails them |
 
 ### View the site
 
@@ -20,7 +20,7 @@ cd trackscan
 python3 -m http.server 8765
 ```
 
-Then open http://localhost:8765.
+Then open http://localhost:8765. To email the automatic alerts to a team inbox, run the Node server instead; [`trackscan/README.md`](trackscan/README.md) covers local and Replit setup.
 
 ### Re-run the audit
 

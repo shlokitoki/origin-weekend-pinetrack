@@ -13,3 +13,4 @@ TrackScan-static-site.zip
 .DS_Store
 .Rhistory
 .RData
+node_modules/
